@@ -1,0 +1,32 @@
+import { DraggableElement } from "./draggable-element";
+export declare abstract class BaseTreeItem extends DraggableElement {
+    private static collapsedIconClass;
+    private static expandedIconClass;
+    private _isExpanded;
+    private _isSelected;
+    private _rootElement;
+    private _treeItemElement;
+    private _expandCollapseElement;
+    private _childContainerElement;
+    private setIsSelected;
+    protected abstract getLabelText(): string;
+    protected click(e: MouseEvent): void;
+    protected getIconClass(): string;
+    protected getAdditionalText(): string;
+    protected getAdditionalTextClass(): string;
+    protected getIndentationLevelIncrement(): number;
+    protected getDragSourceElement(): HTMLElement;
+    protected selectedChanged(scrollIntoView: boolean): void;
+    protected internalRender(): HTMLElement;
+    protected _level: number;
+    onSelectedChange: (sender: BaseTreeItem) => void;
+    constructor();
+    abstract getChildCount(): number;
+    abstract getChildAt(index: number): BaseTreeItem;
+    updateLayout(): void;
+    expand(): void;
+    isDraggable(): boolean;
+    get level(): number;
+    get isSelected(): boolean;
+    set isSelected(value: boolean);
+}

@@ -1,0 +1,32 @@
+export declare const DRAG_THRESHOLD = 10;
+export declare abstract class DraggableElement {
+    private _renderedElement;
+    private _isPointerOver;
+    private _isPointerDown;
+    private _lastClickedPoint;
+    private _dragging;
+    private releasePointerCapture;
+    protected get isPointerOver(): boolean;
+    protected set isPointerOver(value: boolean);
+    protected startDrag(): void;
+    protected pointerDown(e: PointerEvent): void;
+    protected pointerUp(e: PointerEvent): void;
+    protected pointerMove(e: PointerEvent): void;
+    protected click(e: MouseEvent): void;
+    protected doubleClick(e: MouseEvent): void;
+    protected internalUpdateCssStyles(): void;
+    protected internalUpdateLayout(): void;
+    protected getDragSourceElement(): HTMLElement;
+    protected abstract internalRender(): HTMLElement;
+    onStartDrag: (sender: DraggableElement) => void;
+    onEndDrag: (sender: DraggableElement) => void;
+    onClick: (sender: DraggableElement) => void;
+    onDoubleClick: (sender: DraggableElement) => void;
+    isDraggable(): boolean;
+    endDrag(): void;
+    updateLayout(): void;
+    render(): HTMLElement;
+    get renderedElement(): HTMLElement;
+    get dragging(): boolean;
+    set dragging(value: boolean);
+}
