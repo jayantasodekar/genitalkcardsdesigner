@@ -292,7 +292,7 @@ export class Toolbar {
     attachTo(element: HTMLElement) {
         this._attachedTo = element;
         this._attachedTo.className = "acd-toolbar";
-        this._attachedTo.style.display = "none";
+        this._attachedTo.style.display = "block";
         this._attachedTo.style.justifyContent = "space-between";
         this._attachedTo.innerHTML = "";
 

@@ -501,7 +501,7 @@ export class CardDesigner extends Designer.DesignContext {
     private preventJsonUpdate: boolean = false;
 
     private getCurrentCardEditorPayload(): string {
-        return this._isMonacoEditorLoaded ? this._cardEditor.getValue() : Constants.defaultPayload;
+        return this._isMonacoEditorLoaded ? this._cardEditor.getValue() : Constants.defaultTemplatePayload;
     }
 
     private getCurrentSampleDataEditorPayload(): string {
@@ -513,7 +513,7 @@ export class CardDesigner extends Designer.DesignContext {
             this.preventJsonUpdate = true;
 
             let currentEditorPayload = this.getCurrentCardEditorPayload();
-
+console.log("currentEditorPayload",currentEditorPayload);
             if (addToUndoStack) {
                 try {
                     this.addToUndoStack(JSON.parse(currentEditorPayload));
@@ -699,16 +699,16 @@ export class CardDesigner extends Designer.DesignContext {
 			console.log(this._copyJSONButton);
         this.toolbar.addElement(this._copyJSONButton);
 
-        // this._togglePreviewButton = new ToolbarButton(
-        //     CardDesigner.ToolbarCommands.TogglePreview,
-        //     "Preview mode",
-        //     "acd-icon-preview",
-        //     (sender: ToolbarButton) => { this.togglePreview(); });
-        // this._togglePreviewButton.separator = true;
-        // this._togglePreviewButton.allowToggle = true;
-        // this._togglePreviewButton.isVisible = Shared.GlobalSettings.enableDataBindingSupport;
+        this._togglePreviewButton = new ToolbarButton(
+            CardDesigner.ToolbarCommands.TogglePreview,
+            "Preview mode",
+            "acd-icon-preview",
+            (sender: ToolbarButton) => { this.togglePreview(); });
+        this._togglePreviewButton.separator = true;
+        this._togglePreviewButton.allowToggle = true;
+        this._togglePreviewButton.isVisible = Shared.GlobalSettings.enableDataBindingSupport;
 
-        // this.toolbar.addElement(this._togglePreviewButton);
+        this.toolbar.addElement(this._togglePreviewButton);
 
         this._fullScreenHandler = new FullScreenHandler();
         this._fullScreenHandler.onFullScreenChanged = (isFullScreen: boolean) => {
@@ -930,10 +930,10 @@ export class CardDesigner extends Designer.DesignContext {
         root.style.overflow = "hidden";
 
         root.innerHTML =
-            '<div id="toolbarHost" style="display:none"></div>' +
+            '<div id="toolbarHost"></div>' +
             '<div class="content" style="display: flex; flex: 1 1 auto; overflow-y: hidden;">' +
                 '<div id="leftCollapsedPaneTabHost" class="acd-verticalCollapsedTabContainer acd-dockedLeft" style="border-right: 1px solid #D2D2D2;display:none"></div>' +
-                '<div id="toolPalettePanel" class="acd-toolPalette-pane"></div>' +
+                '<div id="toolPalettePanel" class="acd-toolPalette-pane" style="display:none"></div>' +
                 '<div style="display: flex; flex-direction: column; flex: 1 1 100%; overflow: hidden;">' +
                     '<div style="display: flex; flex: 1 1 100%; overflow: hidden;">' +
                         '<div id="cardArea" class="acd-designer-cardArea">' +
