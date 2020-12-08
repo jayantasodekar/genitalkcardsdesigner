@@ -20,7 +20,7 @@
 
 .acd-designer-cardArea {
     flex: 1 1 70%;
-    background-color: #F6F6F6;
+    background-color: #FFFFFF!important;
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -98,6 +98,7 @@
     display: flex;
     flex-direction: column;
     height: 360px;
+    width: 70%;
 }
 
 .acd-json-editor-host {

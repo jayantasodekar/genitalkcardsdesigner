@@ -501,7 +501,7 @@ export class CardDesigner extends Designer.DesignContext {
     private preventJsonUpdate: boolean = false;
 
     private getCurrentCardEditorPayload(): string {
-        return this._isMonacoEditorLoaded ? this._cardEditor.getValue() : Constants.defaultTemplatePayload;
+        return this._isMonacoEditorLoaded ? this._cardEditor.getValue() : Constants.defaultPayload;
     }
 
     private getCurrentSampleDataEditorPayload(): string {
@@ -513,7 +513,7 @@ export class CardDesigner extends Designer.DesignContext {
             this.preventJsonUpdate = true;
 
             let currentEditorPayload = this.getCurrentCardEditorPayload();
-console.log("currentEditorPayload",currentEditorPayload);
+
             if (addToUndoStack) {
                 try {
                     this.addToUndoStack(JSON.parse(currentEditorPayload));
@@ -699,16 +699,16 @@ console.log("currentEditorPayload",currentEditorPayload);
 			console.log(this._copyJSONButton);
         this.toolbar.addElement(this._copyJSONButton);
 
-        this._togglePreviewButton = new ToolbarButton(
-            CardDesigner.ToolbarCommands.TogglePreview,
-            "Preview mode",
-            "acd-icon-preview",
-            (sender: ToolbarButton) => { this.togglePreview(); });
-        this._togglePreviewButton.separator = true;
-        this._togglePreviewButton.allowToggle = true;
-        this._togglePreviewButton.isVisible = Shared.GlobalSettings.enableDataBindingSupport;
+        // this._togglePreviewButton = new ToolbarButton(
+        //     CardDesigner.ToolbarCommands.TogglePreview,
+        //     "Preview mode",
+        //     "acd-icon-preview",
+        //     (sender: ToolbarButton) => { this.togglePreview(); });
+        // this._togglePreviewButton.separator = true;
+        // this._togglePreviewButton.allowToggle = true;
+        // this._togglePreviewButton.isVisible = Shared.GlobalSettings.enableDataBindingSupport;
 
-        this.toolbar.addElement(this._togglePreviewButton);
+        // this.toolbar.addElement(this._togglePreviewButton);
 
         this._fullScreenHandler = new FullScreenHandler();
         this._fullScreenHandler.onFullScreenChanged = (isFullScreen: boolean) => {
@@ -930,17 +930,17 @@ console.log("currentEditorPayload",currentEditorPayload);
         root.style.overflow = "hidden";
 
         root.innerHTML =
-            '<div id="toolbarHost"></div>' +
+            '<div id="toolbarHost" style="display:none"></div>' +
+            '<div id="errorPane" style="flex: none;" class="acd-error-pane acd-hidden"></div>' +
             '<div class="content" style="display: flex; flex: 1 1 auto; overflow-y: hidden;">' +
                 '<div id="leftCollapsedPaneTabHost" class="acd-verticalCollapsedTabContainer acd-dockedLeft" style="border-right: 1px solid #D2D2D2;display:none"></div>' +
-                '<div id="toolPalettePanel" class="acd-toolPalette-pane" style="display:none"></div>' +
-                '<div style="display: flex; flex-direction: column; flex: 1 1 100%; overflow: hidden;">' +
-                    '<div style="display: flex; flex: 1 1 100%; overflow: hidden;">' +
+                '<div id="toolPalettePanel" class="acd-toolPalette-pane"></div>' +
+                '<div style="display: flex;overflow: hidden; width:100%;">' +
+                    '<div style="display: flex; overflow: hidden;">' +
                         '<div id="cardArea" class="acd-designer-cardArea">' +
                             '<div style="flex: 1 1 100%; overflow: auto;">' +
-                                '<div id="designerHost" style="margin: 20px 40px 20px 20px;"></div>' +
+                                '<div id="designerHost"></div>' +
                             '</div>' +
-                            '<div id="errorPane" class="acd-error-pane acd-hidden"></div>' +
                         '</div>' +
                         '<div id="treeViewPanel" class="acd-treeView-pane" style="display:none"></div>' +
                        '<div id="propertySheetPanel" class="acd-propertySheet-pane" style="display:none"></div>' +
@@ -977,14 +977,14 @@ console.log("currentEditorPayload",currentEditorPayload);
         this._toolPaletteToolbox = new Toolbox("toolPalette", Strings.toolboxes.toolPalette.title);
         this._toolPaletteToolbox.content = toolPaletteHost;
 
-        let toolPalettePanel = new SidePanel(
-            "toolPalettePanel",
-            SidePanelAlignment.Left,
-            document.getElementById("leftCollapsedPaneTabHost"));
-        toolPalettePanel.addToolbox(this._toolPaletteToolbox);
-        toolPalettePanel.isResizable = false;
+        // let toolPalettePanel = new SidePanel(
+        //     "toolPalettePanel",
+        //     SidePanelAlignment.Left,
+        //     document.getElementById("leftCollapsedPaneTabHost"));
+        // toolPalettePanel.addToolbox(this._toolPaletteToolbox);
+        // toolPalettePanel.isResizable = false;
 
-        toolPalettePanel.attachTo(document.getElementById("toolPalettePanel"));
+        // toolPalettePanel.attachTo(document.getElementById("toolPalettePanel"));
 
         // JSON editors panel
         this._cardEditorToolbox = new Toolbox("cardEditor", Strings.toolboxes.cardEditor.title);
