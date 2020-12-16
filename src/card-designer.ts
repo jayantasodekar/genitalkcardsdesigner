@@ -692,23 +692,23 @@ export class CardDesigner extends Designer.DesignContext {
 
         // this.toolbar.addElement(this._redoButton);
 
-        this._copyJSONButton = new ToolbarButton(
-            CardDesigner.ToolbarCommands.CopyJSON,
-            "Copy card JSON",
-			"acd-icon-copy");
-			console.log(this._copyJSONButton);
-        this.toolbar.addElement(this._copyJSONButton);
+        // this._copyJSONButton = new ToolbarButton(
+        //     CardDesigner.ToolbarCommands.CopyJSON,
+        //     "",
+		// 	"acd-icon-copy");
+		// 	console.log(this._copyJSONButton);
+        // this.toolbar.addElement(this._copyJSONButton);
 
-        // this._togglePreviewButton = new ToolbarButton(
-        //     CardDesigner.ToolbarCommands.TogglePreview,
-        //     "Preview mode",
-        //     "acd-icon-preview",
-        //     (sender: ToolbarButton) => { this.togglePreview(); });
-        // this._togglePreviewButton.separator = true;
-        // this._togglePreviewButton.allowToggle = true;
-        // this._togglePreviewButton.isVisible = Shared.GlobalSettings.enableDataBindingSupport;
+        this._togglePreviewButton = new ToolbarButton(
+            CardDesigner.ToolbarCommands.TogglePreview,
+            "Preview mode",
+            "acd-icon-preview",
+            (sender: ToolbarButton) => { this.togglePreview(); });
+        this._togglePreviewButton.separator = true;
+        this._togglePreviewButton.allowToggle = true;
+        this._togglePreviewButton.isVisible = Shared.GlobalSettings.enableDataBindingSupport;
 
-        // this.toolbar.addElement(this._togglePreviewButton);
+        this.toolbar.addElement(this._togglePreviewButton);
 
         this._fullScreenHandler = new FullScreenHandler();
         this._fullScreenHandler.onFullScreenChanged = (isFullScreen: boolean) => {
@@ -738,8 +738,8 @@ export class CardDesigner extends Designer.DesignContext {
     }
 
     private updateToolbar() {
-        this._undoButton.isEnabled = this.canUndo;
-        this._redoButton.isEnabled = this.canRedo;
+        // this._undoButton.isEnabled = this.canUndo;
+        // this._redoButton.isEnabled = this.canRedo;
     }
 
     private addToUndoStack(payload: object) {
@@ -960,15 +960,15 @@ export class CardDesigner extends Designer.DesignContext {
             }
         }
 
-        if (this._copyJSONButton.isVisible) {
-            new Clipboard(
-                this._copyJSONButton.renderedElement,
-                {
-                    text: (trigger) => {
-                        return JSON.stringify(this.getCard(), null, 4);
-                    }
-                });
-        }
+        // if (this._copyJSONButton.isVisible) {
+        //     new Clipboard(
+        //         this._copyJSONButton.renderedElement,
+        //         {
+        //             text: (trigger) => {
+        //                 return JSON.stringify(this.getCard(), null, 4);
+        //             }
+        //         });
+        // }
 
         // Tool palette panel
         let toolPaletteHost = document.createElement("div");
