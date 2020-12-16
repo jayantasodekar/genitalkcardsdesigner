@@ -1,6 +1,6 @@
 import { SampleCatalogue, CatalogueEntry } from "./catalogue";
 import * as ACData from "adaptivecards-templating";
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { Dialog } from "./dialog";
 import { Downloader } from "./downloader";
 
@@ -50,7 +50,7 @@ class CatalogueItem {
                     );
                 }
 
-                let card = new Adaptive.AdaptiveCard();
+                let card = new GenietalkCards.GenietalkCard();
                 card.parse(cardPayload);
                 card.render();
                 card.renderedElement.style.width = "100%";

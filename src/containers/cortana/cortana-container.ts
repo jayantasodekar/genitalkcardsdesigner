@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { HostContainer } from "../host-container";
 import * as hostConfigLight from "../../hostConfigs/cortana-skills-light.json";
 import * as hostConfigDark from "../../hostConfigs/cortana-skills-dark.json";
@@ -14,14 +14,14 @@ abstract class BaseCortanaContainer extends HostContainer {
         hostElement.appendChild(frame);
     }
 
-    get targetVersion(): Adaptive.Version {
-        return Adaptive.Versions.v1_2;
+    get targetVersion(): GenietalkCards.Version {
+        return GenietalkCards.Versions.v1_2;
     }
 }
 
 export class LightCortanaContainer extends BaseCortanaContainer {
-    public getHostConfig(): Adaptive.HostConfig {
-        return new Adaptive.HostConfig(hostConfigLight);
+    public getHostConfig(): GenietalkCards.HostConfig {
+        return new GenietalkCards.HostConfig(hostConfigLight);
     }
 }
 
@@ -30,7 +30,7 @@ export class DarkCortanaContainer extends BaseCortanaContainer {
         return "#201E1F";
     }
 
-    public getHostConfig(): Adaptive.HostConfig {
-        return new Adaptive.HostConfig(hostConfigDark);
+    public getHostConfig(): GenietalkCards.HostConfig {
+        return new GenietalkCards.HostConfig(hostConfigDark);
     }
 }

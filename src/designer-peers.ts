@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive  from "adaptivecards";
+import * as GenietalkCards  from  "genietalkcards";
 import * as Controls  from "adaptivecards-controls";
 import { DraggableElement } from "./draggable-element";
 import { PeerCommand } from "./peer-command";
@@ -18,7 +18,7 @@ export abstract class DesignerPeerInplaceEditor {
     abstract render(): HTMLElement;
 }
 
-export abstract class CardElementPeerInplaceEditor<TCardElement extends Adaptive.CardElement> extends DesignerPeerInplaceEditor {
+export abstract class CardElementPeerInplaceEditor<TCardElement extends GenietalkCards.CardElement> extends DesignerPeerInplaceEditor {
     readonly cardElement: TCardElement;
 
     constructor(cardElement: TCardElement) {
@@ -62,18 +62,18 @@ export class PropertySheetCategory {
 
     constructor(readonly name: string) { }
 
-    render(container: Adaptive.Container, context: PropertySheetContext, displayCategoryName: boolean) {
+    render(container: GenietalkCards.Container, context: PropertySheetContext, displayCategoryName: boolean) {
         let entriesToRender: PropertySheetEntry[] = [];
 
         for (let entry of this._entries) {
-            if (Adaptive.isVersionLessOrEqual(entry.targetVersion, context.designContext.targetVersion)) {
+            if (GenietalkCards.isVersionLessOrEqual(entry.targetVersion, context.designContext.targetVersion)) {
                 entriesToRender.push(entry);
             }
         }
 
         if (entriesToRender.length > 0) {
             if (displayCategoryName) {
-                let header = new Adaptive.TextBlock();
+                let header = new GenietalkCards.TextBlock();
                 header.separator = true;
                 header.text = "**" + (this.name === PropertySheetCategory.DefaultCategory ? context.peer.getCardObject().getJsonTypeName() : this.name) + "**";
 
@@ -81,7 +81,7 @@ export class PropertySheetCategory {
             }
 
             for (let entry of entriesToRender) {
-                if (Adaptive.isVersionLessOrEqual(entry.targetVersion, context.designContext.targetVersion)) {
+                if (GenietalkCards.isVersionLessOrEqual(entry.targetVersion, context.designContext.targetVersion)) {
                     container.addItem(entry.render(context));
                 }
             }
@@ -142,7 +142,7 @@ export class PropertySheet {
         }
     }
 
-    render(container: Adaptive.Container, context: PropertySheetContext) {
+    render(container: GenietalkCards.Container, context: PropertySheetContext) {
         for (let categoryName of Object.keys(this._categories)) {
             this._categories[categoryName].render(container, context, this.displayCategoryNames);
         }
@@ -165,15 +165,15 @@ export class PropertySheetContext {
 }
 
 export abstract class PropertySheetEntry {
-    abstract render(context: PropertySheetContext): Adaptive.CardElement;
+    abstract render(context: PropertySheetContext): GenietalkCards.CardElement;
 
-    constructor(readonly targetVersion: Adaptive.TargetVersion) { }
+    constructor(readonly targetVersion: GenietalkCards.TargetVersion) { }
 }
 
 export class SubPropertySheetEntry {
-    render(context: PropertySheetContext): Adaptive.CardElement {
-        let container = new Adaptive.Container();
-        container.spacing = Adaptive.Spacing.Small;
+    render(context: PropertySheetContext): GenietalkCards.CardElement {
+        let container = new GenietalkCards.Container();
+        container.spacing = GenietalkCards.Spacing.Small;
 
         this.propertySheet.render(container, new PropertySheetContext(
             context.designContext,
@@ -183,17 +183,17 @@ export class SubPropertySheetEntry {
         return container;
     }
 
-    constructor(readonly targetVersion: Adaptive.TargetVersion, readonly target: object, readonly propertySheet: PropertySheet) { }
+    constructor(readonly targetVersion: GenietalkCards.TargetVersion, readonly target: object, readonly propertySheet: PropertySheet) { }
 }
 
 export class CustomPropertySheetEntry extends PropertySheetEntry {
-    render(context: PropertySheetContext): Adaptive.CardElement {
+    render(context: PropertySheetContext): GenietalkCards.CardElement {
         if (this.onRender) {
             return this.onRender(context);
         }
     }
 
-    constructor(readonly targetVersion: Adaptive.TargetVersion, readonly onRender: (context: PropertySheetContext) => Adaptive.CardElement) {
+    constructor(readonly targetVersion: GenietalkCards.TargetVersion, readonly onRender: (context: PropertySheetContext) => GenietalkCards.CardElement) {
         super(targetVersion);
     }
 }
@@ -204,7 +204,7 @@ export interface IPropertySheetEditorCommand {
 }
 
 export abstract class SingleInputPropertyEditor extends PropertySheetEntry {
-    protected abstract createInput(context: PropertySheetContext): Adaptive.Input;
+    protected abstract createInput(context: PropertySheetContext): GenietalkCards.Input;
 
     protected getPropertyValue(context: PropertySheetContext): any {
         return context.target[this.propertyName];
@@ -218,24 +218,24 @@ export abstract class SingleInputPropertyEditor extends PropertySheetEntry {
         return [];
     }
 
-    render(context: PropertySheetContext): Adaptive.CardElement {
-        let leftColumn = new Adaptive.Column();
-        leftColumn.width = new Adaptive.SizeAndUnit(100, Adaptive.SizeUnit.Pixel);
-        leftColumn.verticalContentAlignment = Adaptive.VerticalAlignment.Center;
+    render(context: PropertySheetContext): GenietalkCards.CardElement {
+        let leftColumn = new GenietalkCards.Column();
+        leftColumn.width = new GenietalkCards.SizeAndUnit(100, GenietalkCards.SizeUnit.Pixel);
+        leftColumn.verticalContentAlignment = GenietalkCards.VerticalAlignment.Center;
 
-        let rightColumn = new Adaptive.Column();
+        let rightColumn = new GenietalkCards.Column();
         rightColumn.width = "stretch";
-        rightColumn.verticalContentAlignment = Adaptive.VerticalAlignment.Center;
+        rightColumn.verticalContentAlignment = GenietalkCards.VerticalAlignment.Center;
 
-        let columnSet = new Adaptive.ColumnSet();
+        let columnSet = new GenietalkCards.ColumnSet();
 
-        columnSet.spacing = Adaptive.Spacing.Small;
+        columnSet.spacing = GenietalkCards.Spacing.Small;
 
         columnSet.addColumn(leftColumn);
         columnSet.addColumn(rightColumn);
 
-        let label = new Adaptive.TextBlock();
-        label.horizontalAlignment = Adaptive.HorizontalAlignment.Right;
+        let label = new GenietalkCards.TextBlock();
+        label.horizontalAlignment = GenietalkCards.HorizontalAlignment.Right;
         label.wrap = true;
         label.text = this.label;
 
@@ -252,17 +252,17 @@ export abstract class SingleInputPropertyEditor extends PropertySheetEntry {
         let additionalCommands = this.getAdditionalCommands(context);
 
         if (additionalCommands && additionalCommands.length > 0) {
-            let commandColumn = new Adaptive.Column();
+            let commandColumn = new GenietalkCards.Column();
             commandColumn.width = "auto";
-            commandColumn.spacing = Adaptive.Spacing.Small;
-            commandColumn.verticalContentAlignment = Adaptive.VerticalAlignment.Center;
+            commandColumn.spacing = GenietalkCards.Spacing.Small;
+            commandColumn.verticalContentAlignment = GenietalkCards.VerticalAlignment.Center;
 
-            let actionSet = new Adaptive.ActionSet();
+            let actionSet = new GenietalkCards.ActionSet();
 
             for (let command of additionalCommands) {
-                let action = new Adaptive.SubmitAction();
+                let action = new GenietalkCards.SubmitAction();
                 action.title = command.caption;
-                action.onExecute = (sender: Adaptive.Action) => { command.onExecute(this, sender.renderedElement); };
+                action.onExecute = (sender: GenietalkCards.Action) => { command.onExecute(this, sender.renderedElement); };
 
                 actionSet.addAction(action);
             }
@@ -275,7 +275,7 @@ export abstract class SingleInputPropertyEditor extends PropertySheetEntry {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
         readonly causesPropertySheetRefresh: boolean = false) {
@@ -284,8 +284,8 @@ export abstract class SingleInputPropertyEditor extends PropertySheetEntry {
 }
 
 export class StringPropertyEditor extends SingleInputPropertyEditor {
-    protected createInput(context: PropertySheetContext): Adaptive.Input {
-        let input = new Adaptive.TextInput();
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input {
+        let input = new GenietalkCards.TextInput();
         input.defaultValue = this.getPropertyValue(context);
         input.placeholder = "(not set)";
         input.isMultiline = this.isMultiline;
@@ -318,7 +318,7 @@ export class StringPropertyEditor extends SingleInputPropertyEditor {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
         readonly allowBinding: boolean = false,
@@ -338,8 +338,8 @@ export class NumberPropertyEditor extends SingleInputPropertyEditor {
         }
     }
 
-    protected createInput(context: PropertySheetContext): Adaptive.Input {
-        let input = new Adaptive.NumberInput();
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input {
+        let input = new GenietalkCards.NumberInput();
         input.defaultValue = this.getPropertyValue(context);
         input.placeholder = "(not set)";
 
@@ -347,7 +347,7 @@ export class NumberPropertyEditor extends SingleInputPropertyEditor {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
         readonly defaultValue: number | undefined = undefined,
@@ -387,8 +387,8 @@ export class BooleanPropertyEditor extends SingleInputPropertyEditor {
         context.target[this.propertyName] = value == "true";
     }
 
-    protected createInput(context: PropertySheetContext): Adaptive.Input {
-        let input = new Adaptive.ToggleInput();
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input {
+        let input = new GenietalkCards.ToggleInput();
         input.defaultValue = this.getPropertyValue(context);
 
         return input;
@@ -396,21 +396,21 @@ export class BooleanPropertyEditor extends SingleInputPropertyEditor {
 }
 
 export interface IVersionedChoice {
-    targetVersion: Adaptive.TargetVersion;
+    targetVersion: GenietalkCards.TargetVersion;
     name: string;
     value: string;
 }
 
 export class ChoicePropertyEditor extends SingleInputPropertyEditor {
-    protected createInput(context: PropertySheetContext): Adaptive.Input {
-        let input = new Adaptive.ChoiceSetInput();
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input {
+        let input = new GenietalkCards.ChoiceSetInput();
         input.defaultValue = this.getPropertyValue(context);
         input.isCompact = true;
         input.placeholder = "(not set)";
 
         for (let choice of this.choices) {
-            if (Adaptive.isVersionLessOrEqual(choice.targetVersion, context.designContext.targetVersion)) {
-                input.choices.push(new Adaptive.Choice(choice.name, choice.value));
+            if (GenietalkCards.isVersionLessOrEqual(choice.targetVersion, context.designContext.targetVersion)) {
+                input.choices.push(new GenietalkCards.Choice(choice.name, choice.value));
             }
         }
 
@@ -418,7 +418,7 @@ export class ChoicePropertyEditor extends SingleInputPropertyEditor {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
         readonly choices: IVersionedChoice[],
@@ -443,27 +443,27 @@ export class ContainerStylePropertyEditor extends ChoicePropertyEditor {
         }
     }
 
-    constructor(readonly targetVersion: Adaptive.TargetVersion,readonly propertyName: string, readonly label: string) {
+    constructor(readonly targetVersion: GenietalkCards.TargetVersion,readonly propertyName: string, readonly label: string) {
         super(
             targetVersion,
             propertyName,
             label,
             [
-                { targetVersion: Adaptive.Versions.v1_0, name: "(not set)", value: "not_set" },
-                { targetVersion: Adaptive.Versions.v1_0, name: "Default", value: "default" },
-                { targetVersion: Adaptive.Versions.v1_0, name: "Emphasis", value: "emphasis" },
-                { targetVersion: Adaptive.Versions.v1_2, name: "Accent", value: "accent" },
-                { targetVersion: Adaptive.Versions.v1_2, name: "Good", value: "good" },
-                { targetVersion: Adaptive.Versions.v1_2, name: "Attention", value: "attention" },
-                { targetVersion: Adaptive.Versions.v1_2, name: "Warning", value: "warning" }
+                { targetVersion: GenietalkCards.Versions.v1_0, name: "(not set)", value: "not_set" },
+                { targetVersion: GenietalkCards.Versions.v1_0, name: "Default", value: "default" },
+                { targetVersion: GenietalkCards.Versions.v1_0, name: "Emphasis", value: "emphasis" },
+                { targetVersion: GenietalkCards.Versions.v1_2, name: "Accent", value: "accent" },
+                { targetVersion: GenietalkCards.Versions.v1_2, name: "Good", value: "good" },
+                { targetVersion: GenietalkCards.Versions.v1_2, name: "Attention", value: "attention" },
+                { targetVersion: GenietalkCards.Versions.v1_2, name: "Warning", value: "warning" }
             ]);
     }
 }
 
 export class ColumnWidthPropertyEditor extends ChoicePropertyEditor {
     protected getPropertyValue(context: PropertySheetContext): any {
-        if (context.target[this.propertyName] instanceof Adaptive.SizeAndUnit) {
-            if (context.target[this.propertyName].unit == Adaptive.SizeUnit.Pixel) {
+        if (context.target[this.propertyName] instanceof GenietalkCards.SizeAndUnit) {
+            if (context.target[this.propertyName].unit == GenietalkCards.SizeUnit.Pixel) {
                 return "pixels";
             }
             else {
@@ -481,10 +481,10 @@ export class ColumnWidthPropertyEditor extends ChoicePropertyEditor {
                 context.target[this.propertyName] = "auto";
                 break;
             case "pixels":
-                context.target[this.propertyName] = new Adaptive.SizeAndUnit(50, Adaptive.SizeUnit.Pixel);
+                context.target[this.propertyName] = new GenietalkCards.SizeAndUnit(50, GenietalkCards.SizeUnit.Pixel);
                 break;
             case "weighted":
-                context.target[this.propertyName] = new Adaptive.SizeAndUnit(50, Adaptive.SizeUnit.Weight);
+                context.target[this.propertyName] = new GenietalkCards.SizeAndUnit(50, GenietalkCards.SizeUnit.Weight);
                 break;
             case "stretch":
             default:
@@ -514,18 +514,18 @@ export class HeightPropertyEditor extends ChoicePropertyEditor {
 
 export class SizeAndUnitPropertyEditor extends NumberPropertyEditor {
     protected getPropertyValue(context: PropertySheetContext): any {
-        return (<Adaptive.SizeAndUnit>context.target[this.propertyName]).physicalSize.toString();
+        return (<GenietalkCards.SizeAndUnit>context.target[this.propertyName]).physicalSize.toString();
     }
 
     protected setPropertyValue(context: PropertySheetContext, value: string) {
-        context.target[this.propertyName] = new Adaptive.SizeAndUnit(parseInt(value), this.sizeUnit);
+        context.target[this.propertyName] = new GenietalkCards.SizeAndUnit(parseInt(value), this.sizeUnit);
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
-        readonly sizeUnit: Adaptive.SizeUnit,
+        readonly sizeUnit: GenietalkCards.SizeUnit,
         readonly defaultValue: number | undefined = undefined,
         readonly causesPropertySheetRefresh: boolean = false) {
         super(targetVersion, propertyName, label, defaultValue, causesPropertySheetRefresh);
@@ -534,7 +534,7 @@ export class SizeAndUnitPropertyEditor extends NumberPropertyEditor {
 
 export class ActionPropertyEditor extends SingleInputPropertyEditor {
     protected getPropertyValue(context: PropertySheetContext): any {
-        let action = <Adaptive.Action>context.target[this.propertyName];
+        let action = <GenietalkCards.Action>context.target[this.propertyName];
 
         return action ? action.getJsonTypeName() : "none";
     }
@@ -550,19 +550,19 @@ export class ActionPropertyEditor extends SingleInputPropertyEditor {
         }
     }
 
-    protected createInput(context: PropertySheetContext): Adaptive.Input {
-        let input = new Adaptive.ChoiceSetInput();
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input {
+        let input = new GenietalkCards.ChoiceSetInput();
         input.defaultValue = this.getPropertyValue(context);
         input.isCompact = true;
         input.placeholder = "(not set)";
-        input.choices.push(new Adaptive.Choice("(not set)", "none"));
+        input.choices.push(new GenietalkCards.Choice("(not set)", "none"));
 
         for (var i = 0; i < context.designContext.hostContainer.actionsRegistry.getItemCount(); i++) {
             let actionType = context.designContext.hostContainer.actionsRegistry.getItemAt(i).typeName;
             let doAddActionType = this.forbiddenActionTypes ? this.forbiddenActionTypes.indexOf(actionType) < 0 : true;
 
             if (doAddActionType) {
-                let choice = new Adaptive.Choice(actionType, actionType);
+                let choice = new GenietalkCards.Choice(actionType, actionType);
 
                 input.choices.push(choice);
             }
@@ -572,7 +572,7 @@ export class ActionPropertyEditor extends SingleInputPropertyEditor {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
         readonly forbiddenActionTypes: string[] = [],
@@ -582,11 +582,11 @@ export class ActionPropertyEditor extends SingleInputPropertyEditor {
 }
 
 export class CompoundPropertyEditor extends PropertySheetEntry {
-    render(context: PropertySheetContext): Adaptive.CardElement {
-        let container = new Adaptive.Container();
+    render(context: PropertySheetContext): GenietalkCards.CardElement {
+        let container = new GenietalkCards.Container();
 
         for (let entry of this.entries) {
-            if (Adaptive.isVersionLessOrEqual(entry.targetVersion, context.designContext.targetVersion)) {
+            if (GenietalkCards.isVersionLessOrEqual(entry.targetVersion, context.designContext.targetVersion)) {
                 container.addItem(
                     entry.render(
                         new PropertySheetContext(
@@ -600,7 +600,7 @@ export class CompoundPropertyEditor extends PropertySheetEntry {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly entries: PropertySheetEntry[] = []) {
         super(targetVersion);
@@ -612,8 +612,8 @@ export class EnumPropertyEditor extends SingleInputPropertyEditor {
         context.target[this.propertyName] = parseInt(value, 10);
     }
 
-    protected createInput(context: PropertySheetContext): Adaptive.Input {
-        let input = new Adaptive.ChoiceSetInput();
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input {
+        let input = new GenietalkCards.ChoiceSetInput();
         input.defaultValue = this.getPropertyValue(context);
         input.isCompact = true;
         input.placeholder = "(not set)";
@@ -622,7 +622,7 @@ export class EnumPropertyEditor extends SingleInputPropertyEditor {
             let v = parseInt(key, 10);
 
             if (!isNaN(v)) {
-                input.choices.push(new Adaptive.Choice(this.enumType[key], key));
+                input.choices.push(new GenietalkCards.Choice(this.enumType[key], key));
             }
         }
 
@@ -630,7 +630,7 @@ export class EnumPropertyEditor extends SingleInputPropertyEditor {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly propertyName: string,
         readonly label: string,
         readonly enumType: { [s: number]: string },
@@ -657,8 +657,8 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
         context.peer.changed(refreshPropertySheet);
     }
 
-    render(context: PropertySheetContext): Adaptive.CardElement {
-        let result = new Adaptive.Container();
+    render(context: PropertySheetContext): GenietalkCards.CardElement {
+        let result = new GenietalkCards.Container();
 
         let collection = context.target[this.collectionPropertyName];
 
@@ -678,15 +678,15 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
         }
 
         if (nameValuePairs.length == 0) {
-            let messageTextBlock = new Adaptive.TextBlock();
-            messageTextBlock.spacing = Adaptive.Spacing.Small;
+            let messageTextBlock = new GenietalkCards.TextBlock();
+            messageTextBlock.spacing = GenietalkCards.Spacing.Small;
             messageTextBlock.text = this.messageIfEmpty;
 
             result.addItem(messageTextBlock);
         }
         else {
             for (let i = 0; i < nameValuePairs.length; i++) {
-                let textInput = new Adaptive.TextInput();
+                let textInput = new GenietalkCards.TextInput();
                 textInput.placeholder = this.namePropertyLabel;
                 textInput.defaultValue = nameValuePairs[i].name;
                 textInput.onValueChanged = (sender) => {
@@ -695,10 +695,10 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
                     this.collectionChanged(context, nameValuePairs, false);
                 };
 
-                let nameColumn = new Adaptive.Column("stretch");
+                let nameColumn = new GenietalkCards.Column("stretch");
                 nameColumn.addItem(textInput);
 
-                textInput = new Adaptive.TextInput();
+                textInput = new GenietalkCards.TextInput();
                 textInput.placeholder = this.valuePropertyLabel;
                 textInput.defaultValue = nameValuePairs[i].value;
                 textInput.onValueChanged = (sender) => {
@@ -707,11 +707,11 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
                     this.collectionChanged(context, nameValuePairs, false);
                 };
 
-                let valueColumn = new Adaptive.Column("stretch");
-                valueColumn.spacing = Adaptive.Spacing.Small;
+                let valueColumn = new GenietalkCards.Column("stretch");
+                valueColumn.spacing = GenietalkCards.Spacing.Small;
                 valueColumn.addItem(textInput);
 
-                let removeAction = new Adaptive.SubmitAction();
+                let removeAction = new GenietalkCards.SubmitAction();
                 removeAction.title = "X";
                 removeAction.onExecute = (sender) => {
                     nameValuePairs.splice(i, 1);
@@ -719,15 +719,15 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
                     this.collectionChanged(context, nameValuePairs, true);
                 }
 
-                let actionSet = new Adaptive.ActionSet();
+                let actionSet = new GenietalkCards.ActionSet();
                 actionSet.addAction(removeAction);
 
-                let removeColumn = new Adaptive.Column("auto");
-                removeColumn.spacing = Adaptive.Spacing.Small;
+                let removeColumn = new GenietalkCards.Column("auto");
+                removeColumn.spacing = GenietalkCards.Spacing.Small;
                 removeColumn.addItem(actionSet);
 
-                let columnSet = new Adaptive.ColumnSet();
-                columnSet.spacing = Adaptive.Spacing.Small;
+                let columnSet = new GenietalkCards.ColumnSet();
+                columnSet.spacing = GenietalkCards.Spacing.Small;
                 columnSet.addColumn(nameColumn);
                 columnSet.addColumn(valueColumn);
                 columnSet.addColumn(removeColumn);
@@ -736,7 +736,7 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
             }
         }
 
-        let addAction = new Adaptive.SubmitAction();
+        let addAction = new GenietalkCards.SubmitAction();
         addAction.title = this.addButtonTitle;
         addAction.onExecute = (sender) => {
             nameValuePairs.push({ name: "", value: "" });
@@ -744,8 +744,8 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
             this.collectionChanged(context, nameValuePairs, true);
         }
 
-        let actionSet = new Adaptive.ActionSet();
-        actionSet.spacing = Adaptive.Spacing.Small;
+        let actionSet = new GenietalkCards.ActionSet();
+        actionSet.spacing = GenietalkCards.Spacing.Small;
         actionSet.addAction(addAction);
 
         result.addItem(actionSet);
@@ -754,7 +754,7 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
     }
 
     constructor(
-        readonly targetVersion: Adaptive.TargetVersion,
+        readonly targetVersion: GenietalkCards.TargetVersion,
         readonly collectionPropertyName: string,
         readonly namePropertyName: string,
         readonly valuePropertyName: string,
@@ -768,10 +768,10 @@ class NameValuePairPropertyEditor extends PropertySheetEntry {
 }
 
 export abstract class DesignerPeer extends DraggableElement {
-    static readonly idProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "id", "Id");
+    static readonly idProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "id", "Id");
 
     private _parent: DesignerPeer;
-    private _cardObject: Adaptive.CardObject;
+    private _cardObject: GenietalkCards.CardObject;
     private _children: Array<DesignerPeer> = [];
     private _isSelected: boolean = false;
     private _inplaceEditorOverlay: HTMLElement;
@@ -945,7 +945,7 @@ export abstract class DesignerPeer extends DraggableElement {
     onPeerRemoved: (sender: DesignerPeer) => void;
     onPeerAdded: (sender: DesignerPeer, newPeer: DesignerPeer) => void;
 
-    getCardObject(): Adaptive.CardObject {
+    getCardObject(): GenietalkCards.CardObject {
         return this._cardObject;
     }
 
@@ -953,7 +953,7 @@ export abstract class DesignerPeer extends DraggableElement {
         parent: DesignerPeer,
         designerSurface: CardDesignerSurface,
         registration: DesignerPeerRegistrationBase,
-        cardObject: Adaptive.CardObject) {
+        cardObject: GenietalkCards.CardObject) {
         super();
 
         this._parent = parent;
@@ -1083,13 +1083,13 @@ export abstract class DesignerPeer extends DraggableElement {
         }
     }
 
-    buildPropertySheetCard(context: DesignContext): Adaptive.AdaptiveCard {
-        let card = new Adaptive.AdaptiveCard();
-        card.padding = new Adaptive.PaddingDefinition(
-            Adaptive.Spacing.Small,
-            Adaptive.Spacing.Small,
-            Adaptive.Spacing.Small,
-            Adaptive.Spacing.Small);
+    buildPropertySheetCard(context: DesignContext): GenietalkCards.AdaptiveCard {
+        let card = new GenietalkCards.AdaptiveCard();
+        card.padding = new GenietalkCards.PaddingDefinition(
+            GenietalkCards.Spacing.Small,
+            GenietalkCards.Spacing.Small,
+            GenietalkCards.Spacing.Small,
+            GenietalkCards.Spacing.Small);
 
         let propertySheet = new PropertySheet();
 
@@ -1099,14 +1099,14 @@ export abstract class DesignerPeer extends DraggableElement {
             card,
             new PropertySheetContext(context, this));
 
-        let actionSet = new Adaptive.ActionSet();
+        let actionSet = new GenietalkCards.ActionSet();
         let commands = this.getCommands(context, true);
 
         for (let command of commands) {
             if (command.showInPropertySheet) {
-                let action = new Adaptive.SubmitAction();
+                let action = new GenietalkCards.SubmitAction();
                 action.title = command.name;
-                action.onExecute = (sender: Adaptive.Action) => {
+                action.onExecute = (sender: GenietalkCards.Action) => {
                     command.execute(command, action.renderedElement);
                 }
 
@@ -1162,17 +1162,17 @@ export abstract class DesignerPeer extends DraggableElement {
 }
 
 export class ActionPeer extends DesignerPeer {
-    static readonly titleProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "title", "Title");
+    static readonly titleProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "title", "Title");
     static readonly styleProperty = new ChoicePropertyEditor(
-        Adaptive.Versions.v1_2,
+        GenietalkCards.Versions.v1_2,
         "style",
         "Style",
         [
-            { targetVersion: Adaptive.Versions.v1_2, name: "Default", value: Adaptive.ActionStyle.Default },
-            { targetVersion: Adaptive.Versions.v1_2, name: "Positive", value: Adaptive.ActionStyle.Positive },
-            { targetVersion: Adaptive.Versions.v1_2, name: "Destructive", value: Adaptive.ActionStyle.Destructive }
+            { targetVersion: GenietalkCards.Versions.v1_2, name: "Default", value: GenietalkCards.ActionStyle.Default },
+            { targetVersion: GenietalkCards.Versions.v1_2, name: "Positive", value: GenietalkCards.ActionStyle.Positive },
+            { targetVersion: GenietalkCards.Versions.v1_2, name: "Destructive", value: GenietalkCards.ActionStyle.Destructive }
         ]);
-    static readonly iconUrlProperty = new StringPropertyEditor(Adaptive.Versions.v1_1, "iconUrl", "Icon URL");
+    static readonly iconUrlProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_1, "iconUrl", "Icon URL");
 
     protected doubleClick(e: MouseEvent) {
         super.doubleClick(e);
@@ -1188,7 +1188,7 @@ export class ActionPeer extends DesignerPeer {
         parent: DesignerPeer,
         designerSurface: CardDesignerSurface,
         registration: DesignerPeerRegistrationBase,
-        action: Adaptive.Action) {
+        action: GenietalkCards.Action) {
         super(parent, designerSurface, registration, action);
     }
 
@@ -1239,12 +1239,12 @@ export class ActionPeer extends DesignerPeer {
             ActionPeer.iconUrlProperty);
     }
 
-    get action(): Adaptive.Action {
-        return <Adaptive.Action>this.getCardObject();
+    get action(): GenietalkCards.Action {
+        return <GenietalkCards.Action>this.getCardObject();
     }
 }
 
-export abstract class TypedActionPeer<TAction extends Adaptive.Action> extends ActionPeer {
+export abstract class TypedActionPeer<TAction extends GenietalkCards.Action> extends ActionPeer {
     constructor(
         parent: DesignerPeer,
         designerSurface: CardDesignerSurface,
@@ -1258,25 +1258,25 @@ export abstract class TypedActionPeer<TAction extends Adaptive.Action> extends A
     }
 }
 
-export class HttpActionPeer extends TypedActionPeer<Adaptive.HttpAction> {
-    static readonly ignoreInputValidationProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_3, "ignoreInputValidation", "Ignore input validation");
+export class HttpActionPeer extends TypedActionPeer<GenietalkCards.HttpAction> {
+    static readonly ignoreInputValidationProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_3, "ignoreInputValidation", "Ignore input validation");
     static readonly methodProperty = new ChoicePropertyEditor(
-        Adaptive.Versions.v1_0,
+        GenietalkCards.Versions.v1_0,
         "method",
         "Method",
         [
-            { targetVersion: Adaptive.Versions.v1_0, name: "GET", value: "GET" },
-            { targetVersion: Adaptive.Versions.v1_0, name: "POST", value: "POST" }
+            { targetVersion: GenietalkCards.Versions.v1_0, name: "GET", value: "GET" },
+            { targetVersion: GenietalkCards.Versions.v1_0, name: "POST", value: "POST" }
         ],
         true);
-    static readonly urlProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "url", "Url");
-    static readonly bodyProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "body", "Body", false, true);
+    static readonly urlProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "url", "Url");
+    static readonly bodyProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "body", "Body", false, true);
     static readonly headersProperty = new NameValuePairPropertyEditor(
-        Adaptive.Versions.v1_0,
+        GenietalkCards.Versions.v1_0,
         "headers",
         "name",
         "value",
-        (name: string, value: string) => { return new Adaptive.HttpHeader(name, value); },
+        (name: string, value: string) => { return new GenietalkCards.HttpHeader(name, value); },
         "Name",
         "Value",
         "Add a new header",
@@ -1285,7 +1285,7 @@ export class HttpActionPeer extends TypedActionPeer<Adaptive.HttpAction> {
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
 
-        // if (Adaptive.GlobalSettings.useBuiltInInputValidation) {
+        // if (GenietalkCards.GlobalSettings.useBuiltInInputValidation) {
         //     propertySheet.add(
         //         PropertySheetCategory.DefaultCategory,
         //         HttpActionPeer.ignoreInputValidationProperty);
@@ -1308,9 +1308,9 @@ export class HttpActionPeer extends TypedActionPeer<Adaptive.HttpAction> {
     }
 }
 
-export class SubmitActionPeer extends TypedActionPeer<Adaptive.SubmitAction> {
-    static readonly ignoreInputValidationProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_3, "ignoreInputValidation", "Ignore input validation");
-    static readonly dataProperty = new ObjectPropertyEditor(Adaptive.Versions.v1_0, "data", "Data");
+export class SubmitActionPeer extends TypedActionPeer<GenietalkCards.SubmitAction> {
+    static readonly ignoreInputValidationProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_3, "ignoreInputValidation", "Ignore input validation");
+    static readonly dataProperty = new ObjectPropertyEditor(GenietalkCards.Versions.v1_0, "data", "Data");
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -1322,8 +1322,8 @@ export class SubmitActionPeer extends TypedActionPeer<Adaptive.SubmitAction> {
     }
 }
 
-export class OpenUrlActionPeer extends TypedActionPeer<Adaptive.OpenUrlAction> {
-    static readonly urlProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "url", "Url");
+export class OpenUrlActionPeer extends TypedActionPeer<GenietalkCards.OpenUrlAction> {
+    static readonly urlProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "url", "Url");
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -1334,34 +1334,34 @@ export class OpenUrlActionPeer extends TypedActionPeer<Adaptive.OpenUrlAction> {
     }
 }
 
-export class ShowCardActionPeer extends TypedActionPeer<Adaptive.ShowCardAction> {
+export class ShowCardActionPeer extends TypedActionPeer<GenietalkCards.ShowCardAction> {
     protected getToolTip(): string {
         return "Double click to open/close";
     }
 }
 
-export class ToggleVisibilityActionPeer extends TypedActionPeer<Adaptive.ToggleVisibilityAction> {
+export class ToggleVisibilityActionPeer extends TypedActionPeer<GenietalkCards.ToggleVisibilityAction> {
 }
 
 export class CardElementPeer extends DesignerPeer {
     static readonly dataContextProperty = new CustomCardObjectPropertyEditor("*", "$data", "Data context", true);
     static readonly whenProperty = new CustomCardObjectPropertyEditor("*", "$when", "Only show when", true);
-    static readonly idProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "id", "Id");
-    static readonly isVisibleProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_2, "isVisible", "Initially visible");
-    static readonly spacingProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "spacing", "Spacing", Adaptive.Spacing);
-    static readonly separatorProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_0, "separator", "Separator");
-    static readonly horizontalAlignmentProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "horizontalAlignment", "Horizontal alignment", Adaptive.HorizontalAlignment);
+    static readonly idProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "id", "Id");
+    static readonly isVisibleProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_2, "isVisible", "Initially visible");
+    static readonly spacingProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "spacing", "Spacing", GenietalkCards.Spacing);
+    static readonly separatorProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_0, "separator", "Separator");
+    static readonly horizontalAlignmentProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "horizontalAlignment", "Horizontal alignment", GenietalkCards.HorizontalAlignment);
     static readonly heightProperty = new HeightPropertyEditor(
-        Adaptive.Versions.v1_1,
+        GenietalkCards.Versions.v1_1,
         "height",
         "Height",
         [
-            { targetVersion: Adaptive.Versions.v1_1, name: "Automatic", value: "auto" },
-            { targetVersion: Adaptive.Versions.v1_1, name: "Stretch", value: "stretch" }
+            { targetVersion: GenietalkCards.Versions.v1_1, name: "Automatic", value: "auto" },
+            { targetVersion: GenietalkCards.Versions.v1_1, name: "Stretch", value: "stretch" }
         ]);
 
-    protected insertElementAfter(newElement: Adaptive.CardElement) {
-        if (this.cardElement.parent instanceof Adaptive.Container) {
+    protected insertElementAfter(newElement: GenietalkCards.CardElement) {
+        if (this.cardElement.parent instanceof GenietalkCards.Container) {
             this.cardElement.parent.insertItemAfter(newElement, this.cardElement);
 
             var newPeer = CardDesignerSurface.cardElementPeerRegistry.createPeerInstance(this.designerSurface, this, newElement);
@@ -1389,10 +1389,10 @@ export class CardElementPeer extends DesignerPeer {
         parent: DesignerPeer,
         designerSurface: CardDesignerSurface,
         registration: DesignerPeerRegistrationBase,
-        cardElement: Adaptive.CardElement) {
+        cardElement: GenietalkCards.CardElement) {
         super(parent, designerSurface, registration, cardElement);
 
-        if (cardElement instanceof Adaptive.CardElementContainer) {
+        if (cardElement instanceof GenietalkCards.CardElementContainer) {
             for (var i = 0; i < cardElement.getItemCount(); i++) {
                 this.insertChild(CardDesignerSurface.cardElementPeerRegistry.createPeerInstance(this.designerSurface, this, cardElement.getItemAt(i)));
             }
@@ -1425,11 +1425,11 @@ export class CardElementPeer extends DesignerPeer {
     }
 
     canDrop(peer: DesignerPeer) {
-        return this.cardElement instanceof Adaptive.Container && peer instanceof CardElementPeer;
+        return this.cardElement instanceof GenietalkCards.Container && peer instanceof CardElementPeer;
     }
 
     tryDrop(peer: DesignerPeer, insertionPoint: IPoint): boolean {
-        if (this.cardElement instanceof Adaptive.Container && peer instanceof CardElementPeer) {
+        if (this.cardElement instanceof GenietalkCards.Container && peer instanceof CardElementPeer) {
             let targetChild: DesignerPeer = null;
             let insertAfter: boolean;
 
@@ -1543,12 +1543,12 @@ export class CardElementPeer extends DesignerPeer {
             CardElementPeer.heightProperty);
     }
 
-    get cardElement(): Adaptive.CardElement {
-        return <Adaptive.CardElement>this.getCardObject();
+    get cardElement(): GenietalkCards.CardElement {
+        return <GenietalkCards.CardElement>this.getCardObject();
     }
 }
 
-export abstract class TypedCardElementPeer<TCardElement extends Adaptive.CardElement> extends CardElementPeer {
+export abstract class TypedCardElementPeer<TCardElement extends GenietalkCards.CardElement> extends CardElementPeer {
     constructor(
         parent: DesignerPeer,
         designerSurface: CardDesignerSurface,
@@ -1562,12 +1562,12 @@ export abstract class TypedCardElementPeer<TCardElement extends Adaptive.CardEle
     }
 }
 
-export class AdaptiveCardPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard> {
-    static readonly langProperty = new StringPropertyEditor(Adaptive.Versions.v1_1, "lang", "Language");
-    static readonly fallbackTextProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "fallbackText", "Fallback text", false, true);
-    static readonly speakProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "speak", "Speak");
+export class AdaptiveCardPeer extends TypedCardElementPeer<GenietalkCards.AdaptiveCard> {
+    static readonly langProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_1, "lang", "Language");
+    static readonly fallbackTextProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "fallbackText", "Fallback text", false, true);
+    static readonly speakProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "speak", "Speak");
 
-    protected addAction(action: Adaptive.Action) {
+    protected addAction(action: GenietalkCards.Action) {
         this.cardElement.addAction(action);
 
         this.insertChild(CardDesignerSurface.actionPeerRegistry.createPeerInstance(this.designerSurface, this, action));
@@ -1580,7 +1580,7 @@ export class AdaptiveCardPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>) {
         super.internalAddCommands(context, commands);
 
-        let availableActions: Adaptive.ITypeRegistration<Adaptive.Action>[] = [];
+        let availableActions: GenietalkCards.ITypeRegistration<GenietalkCards.Action>[] = [];
 
         for (var i = 0; i < context.hostContainer.actionsRegistry.getItemCount(); i++) {
             let typeRegistration = context.hostContainer.actionsRegistry.getItemAt(i);
@@ -1674,24 +1674,24 @@ export class AdaptiveCardPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard
 
             propertySheet.add(
                 PropertySheetCategory.SelectionAction,
-                new SubPropertySheetEntry(Adaptive.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
+                new SubPropertySheetEntry(GenietalkCards.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
         }
     }
 }
 
-export class ColumnPeer extends TypedCardElementPeer<Adaptive.Column> {
-    private static readonly pixelWidthProperty = new SizeAndUnitPropertyEditor(Adaptive.Versions.v1_1, "width", "Width in pixels", Adaptive.SizeUnit.Pixel);
-    private static readonly weightProperty = new SizeAndUnitPropertyEditor(Adaptive.Versions.v1_0, "width", "Weight", Adaptive.SizeUnit.Weight);
+export class ColumnPeer extends TypedCardElementPeer<GenietalkCards.Column> {
+    private static readonly pixelWidthProperty = new SizeAndUnitPropertyEditor(GenietalkCards.Versions.v1_1, "width", "Width in pixels", GenietalkCards.SizeUnit.Pixel);
+    private static readonly weightProperty = new SizeAndUnitPropertyEditor(GenietalkCards.Versions.v1_0, "width", "Weight", GenietalkCards.SizeUnit.Weight);
 
     static readonly widthProperty = new ColumnWidthPropertyEditor(
-        Adaptive.Versions.v1_0,
+        GenietalkCards.Versions.v1_0,
         "width",
         "Width",
         [
-            { targetVersion: Adaptive.Versions.v1_0, name: "Automatic", value: "auto" },
-            { targetVersion: Adaptive.Versions.v1_0, name: "Stretch", value: "stretch" },
-            { targetVersion: Adaptive.Versions.v1_0, name: "Weighted", value: "weighted" },
-            { targetVersion: Adaptive.Versions.v1_1, name: "Pixels", value: "pixels" }
+            { targetVersion: GenietalkCards.Versions.v1_0, name: "Automatic", value: "auto" },
+            { targetVersion: GenietalkCards.Versions.v1_0, name: "Stretch", value: "stretch" },
+            { targetVersion: GenietalkCards.Versions.v1_0, name: "Weighted", value: "weighted" },
+            { targetVersion: GenietalkCards.Versions.v1_1, name: "Pixels", value: "pixels" }
         ],
         true);
 
@@ -1700,9 +1700,9 @@ export class ColumnPeer extends TypedCardElementPeer<Adaptive.Column> {
     }
 
     protected internalGetTreeItemText(): string {
-        if (this.cardElement.width instanceof Adaptive.SizeAndUnit) {
+        if (this.cardElement.width instanceof GenietalkCards.SizeAndUnit) {
             switch (this.cardElement.width.unit) {
-                case Adaptive.SizeUnit.Weight:
+                case GenietalkCards.SizeUnit.Weight:
                     return "Weight: " + this.cardElement.width.physicalSize;
                 default:
                     return this.cardElement.width.physicalSize + " pixels";
@@ -1731,8 +1731,8 @@ export class ColumnPeer extends TypedCardElementPeer<Adaptive.Column> {
             PropertySheetCategory.LayoutCategory,
             ColumnPeer.widthProperty);
 
-        if (this.cardElement.width instanceof Adaptive.SizeAndUnit) {
-            if (this.cardElement.width.unit == Adaptive.SizeUnit.Pixel) {
+        if (this.cardElement.width instanceof GenietalkCards.SizeAndUnit) {
+            if (this.cardElement.width.unit == GenietalkCards.SizeUnit.Pixel) {
                 propertySheet.add(
                     PropertySheetCategory.LayoutCategory,
                     ColumnPeer.pixelWidthProperty);
@@ -1775,12 +1775,12 @@ export class ColumnPeer extends TypedCardElementPeer<Adaptive.Column> {
 
             propertySheet.add(
                 PropertySheetCategory.SelectionAction,
-                new SubPropertySheetEntry(Adaptive.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
+                new SubPropertySheetEntry(GenietalkCards.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
         }
     }
 }
 
-export class ColumnSetPeer extends TypedCardElementPeer<Adaptive.ColumnSet> {
+export class ColumnSetPeer extends TypedCardElementPeer<GenietalkCards.ColumnSet> {
     protected isContainer(): boolean {
         return true;
     }
@@ -1795,7 +1795,7 @@ export class ColumnSetPeer extends TypedCardElementPeer<Adaptive.ColumnSet> {
                     iconClass: "acd-icon-addColumn",
                     isPromotable: true,
                     execute: (command: PeerCommand, clickedElement: HTMLElement) => {
-                        var column = new Adaptive.Column();
+                        var column = new GenietalkCards.Column();
                         column.width = "stretch";
 
                         this.cardElement.addColumn(column);
@@ -1845,7 +1845,7 @@ export class ColumnSetPeer extends TypedCardElementPeer<Adaptive.ColumnSet> {
 
             propertySheet.add(
                 PropertySheetCategory.SelectionAction,
-                new SubPropertySheetEntry(Adaptive.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
+                new SubPropertySheetEntry(GenietalkCards.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
         }
     }
 
@@ -1854,20 +1854,20 @@ export class ColumnSetPeer extends TypedCardElementPeer<Adaptive.ColumnSet> {
     }
 }
 
-export class ContainerPeer extends TypedCardElementPeer<Adaptive.Container> {
-    static readonly selectActionProperty = new ActionPropertyEditor(Adaptive.Versions.v1_0, "selectAction", "Action type", [ Adaptive.ShowCardAction.JsonTypeName ], true);
-    static readonly minHeightProperty = new NumberPropertyEditor(Adaptive.Versions.v1_2, "minPixelHeight", "Minimum height in pixels");
-    static readonly verticalContentAlignmentProperty = new EnumPropertyEditor(Adaptive.Versions.v1_1, "verticalContentAlignment", "Vertical content alignment", Adaptive.VerticalAlignment);
-    static readonly styleProperty = new ContainerStylePropertyEditor(Adaptive.Versions.v1_0, "style", "Style");
-    static readonly bleedProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_2, "bleed", "Bleed");
+export class ContainerPeer extends TypedCardElementPeer<GenietalkCards.Container> {
+    static readonly selectActionProperty = new ActionPropertyEditor(GenietalkCards.Versions.v1_0, "selectAction", "Action type", [ GenietalkCards.ShowCardAction.JsonTypeName ], true);
+    static readonly minHeightProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_2, "minPixelHeight", "Minimum height in pixels");
+    static readonly verticalContentAlignmentProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_1, "verticalContentAlignment", "Vertical content alignment", GenietalkCards.VerticalAlignment);
+    static readonly styleProperty = new ContainerStylePropertyEditor(GenietalkCards.Versions.v1_0, "style", "Style");
+    static readonly bleedProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_2, "bleed", "Bleed");
     static readonly backgroundImageProperty = new CompoundPropertyEditor(
-        Adaptive.Versions.v1_0,
+        GenietalkCards.Versions.v1_0,
         "backgroundImage",
         [
-            new StringPropertyEditor(Adaptive.Versions.v1_0, "url", "URL", true),
-            new EnumPropertyEditor(Adaptive.Versions.v1_2, "fillMode", "Fill mode", Adaptive.FillMode),
-            new EnumPropertyEditor(Adaptive.Versions.v1_2, "horizontalAlignment", "Horizontal alignment", Adaptive.HorizontalAlignment),
-            new EnumPropertyEditor(Adaptive.Versions.v1_2, "verticalAlignment", "Vertical alignment", Adaptive.VerticalAlignment)
+            new StringPropertyEditor(GenietalkCards.Versions.v1_0, "url", "URL", true),
+            new EnumPropertyEditor(GenietalkCards.Versions.v1_2, "fillMode", "Fill mode", GenietalkCards.FillMode),
+            new EnumPropertyEditor(GenietalkCards.Versions.v1_2, "horizontalAlignment", "Horizontal alignment", GenietalkCards.HorizontalAlignment),
+            new EnumPropertyEditor(GenietalkCards.Versions.v1_2, "verticalAlignment", "Vertical alignment", GenietalkCards.VerticalAlignment)
         ]
     );
 
@@ -1909,13 +1909,13 @@ export class ContainerPeer extends TypedCardElementPeer<Adaptive.Container> {
 
             propertySheet.add(
                 PropertySheetCategory.SelectionAction,
-                new SubPropertySheetEntry(Adaptive.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
+                new SubPropertySheetEntry(GenietalkCards.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));
         }
     }
 }
 
-export class ActionSetPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard> {
-    protected addAction(action: Adaptive.Action) {
+export class ActionSetPeer extends TypedCardElementPeer<GenietalkCards.AdaptiveCard> {
+    protected addAction(action: GenietalkCards.Action) {
         this.cardElement.addAction(action);
 
         this.insertChild(CardDesignerSurface.actionPeerRegistry.createPeerInstance(this.designerSurface, this, action));
@@ -1924,7 +1924,7 @@ export class ActionSetPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard> {
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>) {
         super.internalAddCommands(context, commands);
 
-        let availableActions: Adaptive.ITypeRegistration<Adaptive.Action>[] = [];
+        let availableActions: GenietalkCards.ITypeRegistration<GenietalkCards.Action>[] = [];
 
         for (var i = 0; i < context.hostContainer.actionsRegistry.getItemCount(); i++) {
             let typeRegistration = context.hostContainer.actionsRegistry.getItemAt(i);
@@ -1968,8 +1968,8 @@ export class ActionSetPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard> {
     }
 }
 
-export class ImageSetPeer extends TypedCardElementPeer<Adaptive.ImageSet> {
-    static readonly ImageSizeProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "imageSize", "Image size", Adaptive.Size);
+export class ImageSetPeer extends TypedCardElementPeer<GenietalkCards.ImageSet> {
+    static readonly ImageSizeProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "imageSize", "Image size", GenietalkCards.Size);
 
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>) {
         super.internalAddCommands(context, commands);
@@ -1981,7 +1981,7 @@ export class ImageSetPeer extends TypedCardElementPeer<Adaptive.ImageSet> {
                     iconClass: "acd-icon-image",
                     isPromotable: true,
                     execute: (command: PeerCommand, clickedElement: HTMLElement) => {
-                        let newImage = new Adaptive.Image();
+                        let newImage = new GenietalkCards.Image();
 
                         this.cardElement.addImage(newImage);
 
@@ -2000,14 +2000,14 @@ export class ImageSetPeer extends TypedCardElementPeer<Adaptive.ImageSet> {
     }
 }
 
-export class ImagePeer extends TypedCardElementPeer<Adaptive.Image> {
-    static readonly urlProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "url", "Url", true);
-    static readonly altTextProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "altText", "Alternate text", true);
-    static readonly sizeProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "size", "Size", Adaptive.Size);
-    static readonly pixelWidthProperty = new NumberPropertyEditor(Adaptive.Versions.v1_1, "pixelWidth", "Width in pixels");
-    static readonly pixelHeightProperty = new NumberPropertyEditor(Adaptive.Versions.v1_1, "pixelHeight", "Height in pixels");
-    static readonly styleProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "style", "Style", Adaptive.ImageStyle);
-    static readonly backgroundColorProperty = new StringPropertyEditor(Adaptive.Versions.v1_1, "backgroundColor", "Background color");
+export class ImagePeer extends TypedCardElementPeer<GenietalkCards.Image> {
+    static readonly urlProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "url", "Url", true);
+    static readonly altTextProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "altText", "Alternate text", true);
+    static readonly sizeProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "size", "Size", GenietalkCards.Size);
+    static readonly pixelWidthProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_1, "pixelWidth", "Width in pixels");
+    static readonly pixelHeightProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_1, "pixelHeight", "Height in pixels");
+    static readonly styleProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "style", "Style", GenietalkCards.ImageStyle);
+    static readonly backgroundColorProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_1, "backgroundColor", "Background color");
 
     private get isParentImageSet(): boolean {
         return this.parent && this.parent instanceof ImageSetPeer;
@@ -2097,20 +2097,20 @@ export class ImagePeer extends TypedCardElementPeer<Adaptive.Image> {
 
                 propertySheet.add(
                     PropertySheetCategory.SelectionAction,
-                    new SubPropertySheetEntry(Adaptive.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));            }
+                    new SubPropertySheetEntry(GenietalkCards.Versions.v1_2, this.cardElement.selectAction, subPropertySheet));            }
         }
     }
 }
 
-export class MediaPeer extends TypedCardElementPeer<Adaptive.Media> {
-    static readonly altTextProperty = new StringPropertyEditor(Adaptive.Versions.v1_1, "altText", "Alternate text", true);
-    static readonly posterUrlProperty = new StringPropertyEditor(Adaptive.Versions.v1_1, "posterUrl", "Poster URL", true);
+export class MediaPeer extends TypedCardElementPeer<GenietalkCards.Media> {
+    static readonly altTextProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_1, "altText", "Alternate text", true);
+    static readonly posterUrlProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_1, "posterUrl", "Poster URL", true);
     static readonly sourcesProperty = new NameValuePairPropertyEditor(
-        Adaptive.Versions.v1_1,
+        GenietalkCards.Versions.v1_1,
         "sources",
         "url",
         "mimeType",
-        (name: string, value: string) => { return new Adaptive.MediaSource(name, value); },
+        (name: string, value: string) => { return new GenietalkCards.MediaSource(name, value); },
         "URL",
         "MIME type",
         "Add a new source",
@@ -2142,13 +2142,13 @@ export class MediaPeer extends TypedCardElementPeer<Adaptive.Media> {
     }
 }
 
-export class FactSetPeer extends TypedCardElementPeer<Adaptive.FactSet> {
+export class FactSetPeer extends TypedCardElementPeer<GenietalkCards.FactSet> {
     static readonly factsProperty = new NameValuePairPropertyEditor(
-        Adaptive.Versions.v1_0,
+        GenietalkCards.Versions.v1_0,
         "facts",
         "name",
         "value",
-        (name: string, value: string) => { return new Adaptive.Fact(name, value); },
+        (name: string, value: string) => { return new GenietalkCards.Fact(name, value); },
         "Name",
         "Value",
         "Add a new fact",
@@ -2172,8 +2172,8 @@ export class FactSetPeer extends TypedCardElementPeer<Adaptive.FactSet> {
         super.initializeCardElement();
 
         this.cardElement.facts.push(
-            new Adaptive.Fact("Fact 1", "Value 1"),
-            new Adaptive.Fact("Fact 2", "Value 2")
+            new GenietalkCards.Fact("Fact 1", "Value 1"),
+            new GenietalkCards.Fact("Fact 2", "Value 2")
         );
     }
 
@@ -2188,13 +2188,13 @@ export class FactSetPeer extends TypedCardElementPeer<Adaptive.FactSet> {
     }
 }
 
-export abstract class InputPeer<TInput extends Adaptive.Input> extends TypedCardElementPeer<TInput> {
+export abstract class InputPeer<TInput extends GenietalkCards.Input> extends TypedCardElementPeer<TInput> {
     static readonly validationProperty = new CompoundPropertyEditor(
-        Adaptive.Versions.v1_3,
+        GenietalkCards.Versions.v1_3,
         "validation",
         [
-            //new EnumPropertyEditor(Adaptive.Versions.v1_3, "necessity", "Necessity", Adaptive.InputValidationNecessity),
-            new StringPropertyEditor(Adaptive.Versions.v1_3, "errorMessage", "Error message")
+            //new EnumPropertyEditor(GenietalkCards.Versions.v1_3, "necessity", "Necessity", GenietalkCards.InputValidationNecessity),
+            new StringPropertyEditor(GenietalkCards.Versions.v1_3, "errorMessage", "Error message")
         ]
     );
 
@@ -2211,13 +2211,13 @@ export abstract class InputPeer<TInput extends Adaptive.Input> extends TypedCard
     }
 }
 
-export class TextInputPeer extends InputPeer<Adaptive.TextInput> {
-    static readonly defaultValueProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "defaultValue", "Default value");
-    static readonly placeholderProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "placeholder", "Placeholder");
-    static readonly isMultilineProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_0, "isMultiline", "Multi-line", true);
-    static readonly styleProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "style", "Style", Adaptive.InputTextStyle);
-    static readonly maxLengthProperty = new NumberPropertyEditor(Adaptive.Versions.v1_0, "maxLength", "Maximum length");
-    static readonly inlineActionProperty = new ActionPropertyEditor(Adaptive.Versions.v1_2, "inlineAction", "Action type", [ Adaptive.ShowCardAction.JsonTypeName ], true);
+export class TextInputPeer extends InputPeer<GenietalkCards.TextInput> {
+    static readonly defaultValueProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "defaultValue", "Default value");
+    static readonly placeholderProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "placeholder", "Placeholder");
+    static readonly isMultilineProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_0, "isMultiline", "Multi-line", true);
+    static readonly styleProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "style", "Style", GenietalkCards.InputTextStyle);
+    static readonly maxLengthProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_0, "maxLength", "Maximum length");
+    static readonly inlineActionProperty = new ActionPropertyEditor(GenietalkCards.Versions.v1_2, "inlineAction", "Action type", [ GenietalkCards.ShowCardAction.JsonTypeName ], true);
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -2248,7 +2248,7 @@ export class TextInputPeer extends InputPeer<Adaptive.TextInput> {
 
             propertySheet.add(
                 PropertySheetCategory.InlineAction,
-                new SubPropertySheetEntry(Adaptive.Versions.v1_2, this.cardElement.inlineAction, subPropertySheet));
+                new SubPropertySheetEntry(GenietalkCards.Versions.v1_2, this.cardElement.inlineAction, subPropertySheet));
         }
 
         propertySheet.add(
@@ -2264,11 +2264,11 @@ export class TextInputPeer extends InputPeer<Adaptive.TextInput> {
     }
 }
 
-export class NumberInputPeer extends InputPeer<Adaptive.NumberInput> {
-    static readonly defaultValueProperty = new NumberPropertyEditor(Adaptive.Versions.v1_0, "defaultValue", "Default value");
-    static readonly placeholderProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "placeholder", "Placeholder");
-    static readonly minProperty = new NumberPropertyEditor(Adaptive.Versions.v1_0, "min", "Minimum value");
-    static readonly maxProperty = new NumberPropertyEditor(Adaptive.Versions.v1_0, "max", "Maximum value");
+export class NumberInputPeer extends InputPeer<GenietalkCards.NumberInput> {
+    static readonly defaultValueProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_0, "defaultValue", "Default value");
+    static readonly placeholderProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "placeholder", "Placeholder");
+    static readonly minProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_0, "min", "Minimum value");
+    static readonly maxProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_0, "max", "Maximum value");
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -2288,10 +2288,10 @@ export class NumberInputPeer extends InputPeer<Adaptive.NumberInput> {
     }
 }
 
-export class DateInputPeer extends InputPeer<Adaptive.DateInput> {
-    static readonly defaultValueProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "defaultValue", "Default value");
-    static readonly minProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "min", "Minimum value");
-    static readonly maxProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "max", "Maximum value");
+export class DateInputPeer extends InputPeer<GenietalkCards.DateInput> {
+    static readonly defaultValueProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "defaultValue", "Default value");
+    static readonly minProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "min", "Minimum value");
+    static readonly maxProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "max", "Maximum value");
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -2304,10 +2304,10 @@ export class DateInputPeer extends InputPeer<Adaptive.DateInput> {
     }
 }
 
-export class TimeInputPeer extends InputPeer<Adaptive.TimeInput> {
-    static readonly defaultValueProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "defaultValue", "Default value");
-    static readonly minProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "min", "Minimum value");
-    static readonly maxProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "max", "Maximum value");
+export class TimeInputPeer extends InputPeer<GenietalkCards.TimeInput> {
+    static readonly defaultValueProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "defaultValue", "Default value");
+    static readonly minProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "min", "Minimum value");
+    static readonly maxProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "max", "Maximum value");
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -2320,12 +2320,12 @@ export class TimeInputPeer extends InputPeer<Adaptive.TimeInput> {
     }
 }
 
-export class ToggleInputPeer extends InputPeer<Adaptive.ToggleInput> {
-    static readonly defaultValueProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "defaultValue", "Default value");
-    static readonly titleProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "title", "Title", true);
-    static readonly valueOnProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "valueOn", "Value when on");
-    static readonly valueOffProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "valueOff", "Value when off");
-    static readonly wrapProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_2, "wrap", "Wrap");
+export class ToggleInputPeer extends InputPeer<GenietalkCards.ToggleInput> {
+    static readonly defaultValueProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "defaultValue", "Default value");
+    static readonly titleProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "title", "Title", true);
+    static readonly valueOnProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "valueOn", "Value when on");
+    static readonly valueOffProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "valueOff", "Value when off");
+    static readonly wrapProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_2, "wrap", "Wrap");
 
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory: string = PropertySheetCategory.DefaultCategory) {
         super.populatePropertySheet(propertySheet, defaultCategory);
@@ -2347,18 +2347,18 @@ export class ToggleInputPeer extends InputPeer<Adaptive.ToggleInput> {
     }
 }
 
-export class ChoiceSetInputPeer extends InputPeer<Adaptive.ChoiceSetInput> {
-    static readonly defaultValueProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "defaultValue", "Default value");
-    static readonly placeholderProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "placeholder", "Placeholder");
-    static readonly isMultiselectProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_0, "isMultiSelect", "Allow multi selection");
-    static readonly isCompactProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_0, "isCompact", "Compact style");
-    static readonly wrapProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_2, "wrap", "Wrap");
+export class ChoiceSetInputPeer extends InputPeer<GenietalkCards.ChoiceSetInput> {
+    static readonly defaultValueProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "defaultValue", "Default value");
+    static readonly placeholderProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "placeholder", "Placeholder");
+    static readonly isMultiselectProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_0, "isMultiSelect", "Allow multi selection");
+    static readonly isCompactProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_0, "isCompact", "Compact style");
+    static readonly wrapProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_2, "wrap", "Wrap");
     static readonly choicesProperty = new NameValuePairPropertyEditor(
-        Adaptive.Versions.v1_0,
+        GenietalkCards.Versions.v1_0,
         "choices",
         "title",
         "value",
-        (name: string, value: string) => { return new Adaptive.Choice(name, value); },
+        (name: string, value: string) => { return new GenietalkCards.Choice(name, value); },
         "Title",
         "Value",
         "Add a new choice",
@@ -2387,13 +2387,13 @@ export class ChoiceSetInputPeer extends InputPeer<Adaptive.ChoiceSetInput> {
         this.cardElement.placeholder = "Placeholder text";
 
         this.cardElement.choices.push(
-            new Adaptive.Choice("Choice 1", "Choice 1"),
-            new Adaptive.Choice("Choice 2", "Choice 2")
+            new GenietalkCards.Choice("Choice 1", "Choice 1"),
+            new GenietalkCards.Choice("Choice 2", "Choice 2")
         );
     }
 }
 
-class TextBlockPeerInplaceEditor extends CardElementPeerInplaceEditor<Adaptive.TextBlock> {
+class TextBlockPeerInplaceEditor extends CardElementPeerInplaceEditor<GenietalkCards.TextBlock> {
     private _renderedElement: HTMLTextAreaElement;
 
     private close(applyChanges: boolean) {
@@ -2441,15 +2441,15 @@ class TextBlockPeerInplaceEditor extends CardElementPeerInplaceEditor<Adaptive.T
     }
 }
 
-export class TextBlockPeer extends TypedCardElementPeer<Adaptive.TextBlock> {
-    static readonly textProperty = new StringPropertyEditor(Adaptive.Versions.v1_0, "text", "Text", true, true);
-    static readonly wrapProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_0, "wrap", "Wrap");
-    static readonly maxLinesProperty = new NumberPropertyEditor(Adaptive.Versions.v1_0, "maxLines", "Maximum lines", 0);
-    static readonly fontTypeProperty = new EnumPropertyEditor(Adaptive.Versions.v1_2, "fontType", "Font type", Adaptive.FontType);
-    static readonly sizeProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "size", "Size", Adaptive.TextSize);
-    static readonly weightProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "weight", "Weight", Adaptive.TextWeight);
-    static readonly colorProperty = new EnumPropertyEditor(Adaptive.Versions.v1_0, "color", "Color", Adaptive.TextColor);
-    static readonly subtleProperty = new BooleanPropertyEditor(Adaptive.Versions.v1_0, "subtle", "Subtle");
+export class TextBlockPeer extends TypedCardElementPeer<GenietalkCards.TextBlock> {
+    static readonly textProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "text", "Text", true, true);
+    static readonly wrapProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_0, "wrap", "Wrap");
+    static readonly maxLinesProperty = new NumberPropertyEditor(GenietalkCards.Versions.v1_0, "maxLines", "Maximum lines", 0);
+    static readonly fontTypeProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_2, "fontType", "Font type", GenietalkCards.FontType);
+    static readonly sizeProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "size", "Size", GenietalkCards.TextSize);
+    static readonly weightProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "weight", "Weight", GenietalkCards.TextWeight);
+    static readonly colorProperty = new EnumPropertyEditor(GenietalkCards.Versions.v1_0, "color", "Color", GenietalkCards.TextColor);
+    static readonly subtleProperty = new BooleanPropertyEditor(GenietalkCards.Versions.v1_0, "subtle", "Subtle");
 
     protected createInplaceEditor(): DesignerPeerInplaceEditor {
         return new TextBlockPeerInplaceEditor(this.cardElement);
@@ -2517,7 +2517,7 @@ export class TextBlockPeer extends TypedCardElementPeer<Adaptive.TextBlock> {
     }
 }
 
-export class RichTextBlockPeer extends TypedCardElementPeer<Adaptive.RichTextBlock> {
+export class RichTextBlockPeer extends TypedCardElementPeer<GenietalkCards.RichTextBlock> {
     protected internalGetTreeItemText(): string {
         return this.cardElement.asString();
     }
@@ -2530,12 +2530,12 @@ export class RichTextBlockPeer extends TypedCardElementPeer<Adaptive.RichTextBlo
             new CustomPropertySheetEntry(
                 "*",
                 (context: PropertySheetContext) => {
-                    let infoTextBlock = new Adaptive.TextBlock();
+                    let infoTextBlock = new GenietalkCards.TextBlock();
                     infoTextBlock.text = "Use the **Card Payload Editor** to edit the text of this RichTextBlock element.";
                     infoTextBlock.wrap = true;
-                    infoTextBlock.spacing = Adaptive.Spacing.Large;
+                    infoTextBlock.spacing = GenietalkCards.Spacing.Large;
                     infoTextBlock.separator = true;
-                    infoTextBlock.horizontalAlignment = Adaptive.HorizontalAlignment.Center;
+                    infoTextBlock.horizontalAlignment = GenietalkCards.HorizontalAlignment.Center;
 
                     return infoTextBlock;
                 }
@@ -2544,7 +2544,7 @@ export class RichTextBlockPeer extends TypedCardElementPeer<Adaptive.RichTextBlo
     }
 
     initializeCardElement() {
-        let textRun = new Adaptive.TextRun();
+        let textRun = new GenietalkCards.TextRun();
         textRun.text = "New RichTextBlock";
 
         this.cardElement.addInline(textRun);

@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 import { HostContainer } from "../host-container";
 declare abstract class BaseCortanaContainer extends HostContainer {
     renderTo(hostElement: HTMLElement): void;

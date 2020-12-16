@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 import { DraggableElement } from "./draggable-element";
 import { FieldDefinition } from "./data";
 import { DesignContext, CardDesignerSurface } from "./card-designer-surface";

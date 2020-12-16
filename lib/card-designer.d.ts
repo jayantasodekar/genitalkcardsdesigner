@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 import * as Designer from "./card-designer-surface";
 import { HostContainer } from "./containers/host-container";
 import { Toolbar } from "./toolbar";

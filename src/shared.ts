@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 
 export class GlobalSettings {
     static enableDataBindingSupport: boolean = false;
@@ -9,9 +9,9 @@ export class GlobalSettings {
     static showTargetVersionMismatchWarning: boolean = true;
 }
 
-export var SupportedTargetVersions: Adaptive.Version[] = [
-    Adaptive.Versions.v1_0,
-    Adaptive.Versions.v1_1,
-    Adaptive.Versions.v1_2,
-    Adaptive.Versions.v1_3
+export var SupportedTargetVersions: GenietalkCards.Version[] = [
+    GenietalkCards.Versions.v1_0,
+    GenietalkCards.Versions.v1_1,
+    GenietalkCards.Versions.v1_2,
+    GenietalkCards.Versions.v1_3
 ];

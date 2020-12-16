@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 export interface IPoint {
     x: number;
     y: number;

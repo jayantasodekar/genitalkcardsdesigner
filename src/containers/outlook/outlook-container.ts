@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { HostContainer } from "../host-container";
 import * as hostConfig from "../../hostConfigs/outlook-desktop.json";
 
@@ -9,7 +9,7 @@ export class OutlookContainer extends HostContainer {
         super(name, styleSheet);
 
         this.actionsRegistry.unregister("Action.Submit");
-        this.actionsRegistry.register("Action.Http", Adaptive.HttpAction);
+        this.actionsRegistry.register("Action.Http", GenietalkCards.HttpAction);
     }
 
     public renderTo(hostElement: HTMLElement) {
@@ -20,40 +20,40 @@ export class OutlookContainer extends HostContainer {
     public initialize() {
         super.initialize();
 
-        Adaptive.GlobalSettings.useMarkdownInRadioButtonAndCheckbox = false;
+        GenietalkCards.GlobalSettings.useMarkdownInRadioButtonAndCheckbox = false;
     }
 
-    private parsePadding(source: any): Adaptive.PaddingDefinition {
+    private parsePadding(source: any): GenietalkCards.PaddingDefinition {
         if (source) {
             if (typeof source === "string") {
-                var uniformPadding = Adaptive.parseEnum(Adaptive.Spacing, source, Adaptive.Spacing.None);
+                var uniformPadding = GenietalkCards.parseEnum(GenietalkCards.Spacing, source, GenietalkCards.Spacing.None);
 
-                return new Adaptive.PaddingDefinition(
+                return new GenietalkCards.PaddingDefinition(
                     uniformPadding,
                     uniformPadding,
                     uniformPadding,
                     uniformPadding);
             }
             else if (typeof source === "object") {
-                return new Adaptive.PaddingDefinition(
-                    Adaptive.parseEnum(Adaptive.Spacing, source["top"], Adaptive.Spacing.None),
-                    Adaptive.parseEnum(Adaptive.Spacing, source["right"], Adaptive.Spacing.None),
-                    Adaptive.parseEnum(Adaptive.Spacing, source["bottom"], Adaptive.Spacing.None),
-                    Adaptive.parseEnum(Adaptive.Spacing, source["left"], Adaptive.Spacing.None));
+                return new GenietalkCards.PaddingDefinition(
+                    GenietalkCards.parseEnum(GenietalkCards.Spacing, source["top"], GenietalkCards.Spacing.None),
+                    GenietalkCards.parseEnum(GenietalkCards.Spacing, source["right"], GenietalkCards.Spacing.None),
+                    GenietalkCards.parseEnum(GenietalkCards.Spacing, source["bottom"], GenietalkCards.Spacing.None),
+                    GenietalkCards.parseEnum(GenietalkCards.Spacing, source["left"], GenietalkCards.Spacing.None));
             }
         }
 
         return null;
     }
 
-    public parseElement(element: Adaptive.CardElement, source: any, context: Adaptive.SerializationContext) {
-        if (element instanceof Adaptive.Container && typeof source["rtl"] === "boolean") {
+    public parseElement(element: GenietalkCards.CardElement, source: any, context: GenietalkCards.SerializationContext) {
+        if (element instanceof GenietalkCards.Container && typeof source["rtl"] === "boolean") {
             element.rtl = source["rtl"];
         }
 
-        if (element instanceof Adaptive.AdaptiveCard) {
-            var card = <Adaptive.AdaptiveCard>element;
-            var actionArray: Array<Adaptive.Action> = [];
+        if (element instanceof GenietalkCards.AdaptiveCard) {
+            var card = <GenietalkCards.AdaptiveCard>element;
+            var actionArray: Array<GenietalkCards.Action> = [];
 
             card["resources"] = { actions: actionArray };
 
@@ -73,37 +73,37 @@ export class OutlookContainer extends HostContainer {
             }
         }
 
-        if (element instanceof Adaptive.Image) {
-            (<Adaptive.Image>element).backgroundColor = source["backgroundColor"];
+        if (element instanceof GenietalkCards.Image) {
+            (<GenietalkCards.Image>element).backgroundColor = source["backgroundColor"];
         }
 
-        if (element instanceof Adaptive.Container) {
+        if (element instanceof GenietalkCards.Container) {
             var padding = this.parsePadding(source["padding"]);
 
             if (padding) {
-                (<Adaptive.Container>element).padding = padding;
+                (<GenietalkCards.Container>element).padding = padding;
             }
         }
 
-        if (element instanceof Adaptive.ColumnSet) {
+        if (element instanceof GenietalkCards.ColumnSet) {
             var padding = this.parsePadding(source["padding"]);
 
             if (padding) {
-                (<Adaptive.ColumnSet>element).padding = padding;
+                (<GenietalkCards.ColumnSet>element).padding = padding;
             }
         }
     }
 
-    public anchorClicked(element: Adaptive.CardElement, anchor: HTMLAnchorElement): boolean {
+    public anchorClicked(element: GenietalkCards.CardElement, anchor: HTMLAnchorElement): boolean {
         var regEx = /^action:([a-z0-9]+)$/ig;
-        var rootCard = element.getRootElement() as Adaptive.AdaptiveCard;
+        var rootCard = element.getRootElement() as GenietalkCards.AdaptiveCard;
         var matches = regEx.exec(anchor.href);
 
         if (matches) {
             var actionId = matches[1];
 
             if (rootCard) {
-                var actionArray = rootCard["resources"]["actions"] as Array<Adaptive.Action>;
+                var actionArray = rootCard["resources"]["actions"] as Array<GenietalkCards.Action>;
 
                 for (var i = 0; i < actionArray.length; i++) {
                     if (actionArray[i].id == actionId) {
@@ -118,7 +118,7 @@ export class OutlookContainer extends HostContainer {
         return false;
     }
 
-    public getHostConfig(): Adaptive.HostConfig {
-        return new Adaptive.HostConfig(hostConfig);
+    public getHostConfig(): GenietalkCards.HostConfig {
+        return new GenietalkCards.HostConfig(hostConfig);
     }
 }

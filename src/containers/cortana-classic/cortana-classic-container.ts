@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { HostContainer } from "../host-container";
 import * as hostConfig from "../../hostConfigs/cortana-skills-classic.json";
 
@@ -60,7 +60,7 @@ export class CortanaClassicContainer extends HostContainer {
         hostElement.appendChild(frame);
     }
 
-    public getHostConfig(): Adaptive.HostConfig {
-        return new Adaptive.HostConfig(hostConfig);
+    public getHostConfig(): GenietalkCards.HostConfig {
+        return new GenietalkCards.HostConfig(hostConfig);
     }
 }

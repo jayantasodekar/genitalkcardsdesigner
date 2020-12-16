@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { DraggableElement } from "./draggable-element";
 import { FieldDefinition } from "./data";
 import { DesignContext, CardDesignerSurface } from "./card-designer-surface";
@@ -46,10 +46,10 @@ export class ElementPaletteItem extends BasePaletteItem {
         return this.peerRegistration.iconClass;
     }
 
-    readonly typeRegistration: Adaptive.ITypeRegistration<Adaptive.CardElement>;
+    readonly typeRegistration: GenietalkCards.ITypeRegistration<GenietalkCards.CardElement>;
     readonly peerRegistration: DesignerPeerRegistrationBase;
 
-    constructor(typeRegistration: Adaptive.ITypeRegistration<Adaptive.CardElement>, peerRegistration: DesignerPeerRegistrationBase) {
+    constructor(typeRegistration: GenietalkCards.ITypeRegistration<GenietalkCards.CardElement>, peerRegistration: DesignerPeerRegistrationBase) {
         super();
 
         this.typeRegistration = typeRegistration;
@@ -78,14 +78,14 @@ export class DataPaletteItem extends BasePaletteItem {
     }
 
     createPeer(context: DesignContext, designer: CardDesignerSurface): CardElementPeer {
-        let element: Adaptive.CardElement;
+        let element: GenietalkCards.CardElement;
 
         if (this.field.isCollection) {
-            element = new Adaptive.Container();
+            element = new GenietalkCards.Container();
             element.setCustomProperty("$data", "{" + this.field.getPath() + "}");
         }
         else {
-            let textBlock = new Adaptive.TextBlock();
+            let textBlock = new GenietalkCards.TextBlock();
             textBlock.text = "{" + this.field.getPath() + "}";
 
             element = textBlock;

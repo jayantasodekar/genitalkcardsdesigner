@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 import * as Clipboard from "clipboard";
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import * as monaco from "monaco-editor";
 import * as Constants from "./constants";
 import * as Designer from "./card-designer-surface";
@@ -24,7 +24,7 @@ import { TreeView } from "./tree-view";
 import { SampleCatalogue } from "./catalogue";
 
 export class CardDesigner extends Designer.DesignContext {
-    private static internalProcessMarkdown(text: string, result: Adaptive.IMarkdownProcessingResult) {
+    private static internalProcessMarkdown(text: string, result: GenietalkCards.IMarkdownProcessingResult) {
         if (CardDesigner.onProcessMarkdown) {
             CardDesigner.onProcessMarkdown(text, result);
         } else {
@@ -36,7 +36,7 @@ export class CardDesigner extends Designer.DesignContext {
 		}
     }
 
-    static onProcessMarkdown: (text: string, result: Adaptive.IMarkdownProcessingResult) => void = null;
+    static onProcessMarkdown: (text: string, result: GenietalkCards.IMarkdownProcessingResult) => void = null;
 
     private static MAX_UNDO_STACK_SIZE = 50;
 
@@ -118,13 +118,13 @@ export class CardDesigner extends Designer.DesignContext {
         if (this._propertySheetToolbox.content) {
             this._propertySheetToolbox.content.innerHTML = "";
 
-            let card: Adaptive.AdaptiveCard;
+            let card: GenietalkCards.AdaptiveCard;
 
             if (peer) {
                 card = peer.buildPropertySheetCard(this);
             }
             else {
-                card = new Adaptive.AdaptiveCard();
+                card = new GenietalkCards.AdaptiveCard();
                 card.parse(
                     {
                         type: "AdaptiveCard",
@@ -142,13 +142,13 @@ export class CardDesigner extends Designer.DesignContext {
                             }
                         ]
                     },
-                    new Adaptive.SerializationContext(this.targetVersion)
+                    new GenietalkCards.SerializationContext(this.targetVersion)
                 );
-                card.padding = new Adaptive.PaddingDefinition(
-                    Adaptive.Spacing.Small,
-                    Adaptive.Spacing.Small,
-                    Adaptive.Spacing.Small,
-                    Adaptive.Spacing.Small
+                card.padding = new GenietalkCards.PaddingDefinition(
+                    GenietalkCards.Spacing.Small,
+                    GenietalkCards.Spacing.Small,
+                    GenietalkCards.Spacing.Small,
+                    GenietalkCards.Spacing.Small
                 )
             }
 
@@ -237,11 +237,11 @@ export class CardDesigner extends Designer.DesignContext {
         }
     }
 
-    private renderErrorPaneElement(message: string, source?: Adaptive.SerializableObject): HTMLElement {
+    private renderErrorPaneElement(message: string, source?: GenietalkCards.SerializableObject): HTMLElement {
         let errorElement = document.createElement("div");
         errorElement.className = "acd-error-pane-message";
 
-        if (source && source instanceof Adaptive.CardObject) {
+        if (source && source instanceof GenietalkCards.CardObject) {
             errorElement.classList.add("selectable");
             errorElement.title = "Click to select this element";
             errorElement.onclick = (e) => {
@@ -305,7 +305,7 @@ export class CardDesigner extends Designer.DesignContext {
                 this.buildTreeView();
             }
         };
-        this._designerSurface.onCardValidated = (logEntries: Adaptive.IValidationEvent[]) => {
+        this._designerSurface.onCardValidated = (logEntries: GenietalkCards.IValidationEvent[]) => {
             if (this.onCardValidated) {
                 this.onCardValidated(this, logEntries);
             }
@@ -318,7 +318,7 @@ export class CardDesigner extends Designer.DesignContext {
             }
 
             if (logEntries.length > 0) {
-                let dedupedEntries: Adaptive.IValidationEvent[] = [];
+                let dedupedEntries: GenietalkCards.IValidationEvent[] = [];
 
                 for (let entry of logEntries) {
                     if (dedupedEntries.indexOf(entry) < 0) {
@@ -330,10 +330,10 @@ export class CardDesigner extends Designer.DesignContext {
                     let s: string = "";
 
                     switch (entry.phase) {
-                        case Adaptive.ValidationPhase.Parse:
+                        case GenietalkCards.ValidationPhase.Parse:
                             s = "[Parse]";
                             break;
-                        case Adaptive.ValidationPhase.ToJSON:
+                        case GenietalkCards.ValidationPhase.ToJSON:
                             s = "[Serialize]";
                             break;
                         default:
@@ -572,7 +572,7 @@ export class CardDesigner extends Designer.DesignContext {
         }
     }
 
-    private _targetVersion: Adaptive.Version = Adaptive.Versions.latest;
+    private _targetVersion: GenietalkCards.Version = GenietalkCards.Versions.latest;
     private _fullScreenHandler = new FullScreenHandler();
     private _fullScreenButton: ToolbarButton;
     private _hostContainerChoicePicker: ToolbarChoicePicker;
@@ -813,10 +813,10 @@ export class CardDesigner extends Designer.DesignContext {
     constructor(hostContainers: Array<HostContainer> = null) {
         super();
 
-        Adaptive.GlobalSettings.enableFullJsonRoundTrip = true;
-        Adaptive.GlobalSettings.allowPreProcessingPropertyValues = true;
+        GenietalkCards.GlobalSettings.enableFullJsonRoundTrip = true;
+        GenietalkCards.GlobalSettings.allowPreProcessingPropertyValues = true;
 
-        Adaptive.AdaptiveCard.onProcessMarkdown = (text: string, result: Adaptive.IMarkdownProcessingResult) => {
+        GenietalkCards.AdaptiveCard.onProcessMarkdown = (text: string, result: GenietalkCards.IMarkdownProcessingResult) => {
             CardDesigner.internalProcessMarkdown(text, result);
         }
 
@@ -1126,15 +1126,15 @@ export class CardDesigner extends Designer.DesignContext {
     }
 
     onCardPayloadChanged: (designer: CardDesigner) => void;
-    onCardValidated: (designer: CardDesigner, validationLogEntries: Adaptive.IValidationEvent[]) => void;
+    onCardValidated: (designer: CardDesigner, validationLogEntries: GenietalkCards.IValidationEvent[]) => void;
     onActiveHostContainerChanged: (designer: CardDesigner) => void;
     onTargetVersionChanged: (designer: CardDesigner) => void;
 
-    get targetVersion(): Adaptive.Version {
+    get targetVersion(): GenietalkCards.Version {
         return this._targetVersion;
     }
 
-    set targetVersion(value: Adaptive.Version) {
+    set targetVersion(value: GenietalkCards.Version) {
         if (this._targetVersion.compareTo(value) !== 0 && !this._preventRecursiveSetTargetVersion) {
             this._preventRecursiveSetTargetVersion = true;
 

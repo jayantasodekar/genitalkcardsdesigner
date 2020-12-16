@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { HostContainer } from "../host-container";
 import * as hostConfig from "../../hostConfigs/webchat.json";
 
@@ -15,11 +15,11 @@ export class WebChatContainer extends HostContainer {
         hostElement.appendChild(frame);
     }
 
-    public getHostConfig(): Adaptive.HostConfig {
-        return new Adaptive.HostConfig(hostConfig);
+    public getHostConfig(): GenietalkCards.HostConfig {
+        return new GenietalkCards.HostConfig(hostConfig);
     }
 
-    get targetVersion(): Adaptive.Version {
-        return Adaptive.Versions.v1_2;
+    get targetVersion(): GenietalkCards.Version {
+        return GenietalkCards.Versions.v1_3;
     }
 }

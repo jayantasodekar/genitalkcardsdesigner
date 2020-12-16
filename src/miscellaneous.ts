@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 
 export interface IPoint {
 	x: number;
@@ -62,7 +62,7 @@ export class Utils {
 	}
 }
 
-export var defaultHostConfig = new Adaptive.HostConfig(
+export var defaultHostConfig = new GenietalkCards.HostConfig(
     {
         preExpandSingleShowCardAction: true,
         supportsInteractivity: true,
@@ -304,36 +304,36 @@ export var defaultHostConfig = new Adaptive.HostConfig(
         },
         actions: {
             maxActions: 5,
-            spacing: Adaptive.Spacing.Default,
+            spacing: GenietalkCards.Spacing.Default,
             buttonSpacing: 10,
             showCard: {
-                actionMode: Adaptive.ShowCardActionMode.Inline,
+                actionMode: GenietalkCards.ShowCardActionMode.Inline,
                 inlineTopMargin: 16
             },
-            actionsOrientation: Adaptive.Orientation.Horizontal,
-            actionAlignment: Adaptive.ActionAlignment.Left
+            actionsOrientation: GenietalkCards.Orientation.Horizontal,
+            actionAlignment: GenietalkCards.ActionAlignment.Left
         },
         adaptiveCard: {
             allowCustomStyle: true
         },
         imageSet: {
-            imageSize: Adaptive.Size.Medium,
+            imageSize: GenietalkCards.Size.Medium,
             maxImageHeight: 100
         },
         factSet: {
             title: {
-                color: Adaptive.TextColor.Default,
-                size: Adaptive.TextSize.Default,
+                color: GenietalkCards.TextColor.Default,
+                size: GenietalkCards.TextSize.Default,
                 isSubtle: false,
-                weight: Adaptive.TextWeight.Bolder,
+                weight: GenietalkCards.TextWeight.Bolder,
                 wrap: true,
                 maxWidth: 150,
             },
             value: {
-                color: Adaptive.TextColor.Default,
-                size: Adaptive.TextSize.Default,
+                color: GenietalkCards.TextColor.Default,
+                size: GenietalkCards.TextSize.Default,
                 isSubtle: false,
-                weight: Adaptive.TextWeight.Default,
+                weight: GenietalkCards.TextWeight.Default,
                 wrap: true,
             },
             spacing: 10

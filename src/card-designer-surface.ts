@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import * as Controls from "adaptivecards-controls";
 import { DraggableElement } from "./draggable-element";
 import { IPoint } from "./miscellaneous";
@@ -16,14 +16,14 @@ export enum BindingPreviewMode {
     SampleData
 }
 
-export type CardElementType = { new(): Adaptive.CardElement };
-export type ActionType = { new(): Adaptive.Action };
+export type CardElementType = { new(): GenietalkCards.CardElement };
+export type ActionType = { new(): GenietalkCards.Action };
 export type CardElementPeerType = {
     new(
         parent: DesignerPeers.DesignerPeer,
         designerSurface: CardDesignerSurface,
         registration: DesignerPeers.DesignerPeerRegistrationBase,
-        cardElement: Adaptive.CardElement
+        cardElement: GenietalkCards.CardElement
     ): DesignerPeers.CardElementPeer
 };
 export type ActionPeerType = {
@@ -31,7 +31,7 @@ export type ActionPeerType = {
         parent: DesignerPeers.DesignerPeer,
         designerSurface: CardDesignerSurface,
         registration: DesignerPeers.DesignerPeerRegistrationBase,
-        action: Adaptive.Action
+        action: GenietalkCards.Action
     ): DesignerPeers.ActionPeer
 };
 
@@ -100,28 +100,28 @@ export class CardElementPeerRegistry extends DesignerPeerRegistry<CardElementTyp
     reset() {
         this.clear();
 
-        this.registerPeer(Adaptive.AdaptiveCard, DesignerPeers.AdaptiveCardPeer, DesignerPeerCategory.Containers, "acd-icon-adaptiveCard");
-        this.registerPeer(Adaptive.Container, DesignerPeers.ContainerPeer, DesignerPeerCategory.Containers, "acd-icon-container");
-        this.registerPeer(Adaptive.ColumnSet, DesignerPeers.ColumnSetPeer, DesignerPeerCategory.Containers, "acd-icon-columnSet");
-        this.registerPeer(Adaptive.Column, DesignerPeers.ColumnPeer, DesignerPeerCategory.Containers, "acd-icon-column");
-        this.registerPeer(Adaptive.ImageSet, DesignerPeers.ImageSetPeer, DesignerPeerCategory.Containers, "acd-icon-imageSet");
-        this.registerPeer(Adaptive.FactSet, DesignerPeers.FactSetPeer, DesignerPeerCategory.Containers, "acd-icon-factSet");
+        this.registerPeer(GenietalkCards.AdaptiveCard, DesignerPeers.AdaptiveCardPeer, DesignerPeerCategory.Containers, "acd-icon-adaptiveCard");
+        this.registerPeer(GenietalkCards.Container, DesignerPeers.ContainerPeer, DesignerPeerCategory.Containers, "acd-icon-container");
+        this.registerPeer(GenietalkCards.ColumnSet, DesignerPeers.ColumnSetPeer, DesignerPeerCategory.Containers, "acd-icon-columnSet");
+        this.registerPeer(GenietalkCards.Column, DesignerPeers.ColumnPeer, DesignerPeerCategory.Containers, "acd-icon-column");
+        this.registerPeer(GenietalkCards.ImageSet, DesignerPeers.ImageSetPeer, DesignerPeerCategory.Containers, "acd-icon-imageSet");
+        this.registerPeer(GenietalkCards.FactSet, DesignerPeers.FactSetPeer, DesignerPeerCategory.Containers, "acd-icon-factSet");
 
-        this.registerPeer(Adaptive.TextBlock, DesignerPeers.TextBlockPeer, DesignerPeerCategory.Elements, "acd-icon-textBlock");
-        this.registerPeer(Adaptive.RichTextBlock, DesignerPeers.RichTextBlockPeer, DesignerPeerCategory.Elements, "acd-icon-richTextBlock");
-        this.registerPeer(Adaptive.Image, DesignerPeers.ImagePeer, DesignerPeerCategory.Elements, "acd-icon-image");
-        this.registerPeer(Adaptive.Media, DesignerPeers.MediaPeer, DesignerPeerCategory.Elements, "acd-icon-media");
-        this.registerPeer(Adaptive.ActionSet, DesignerPeers.ActionSetPeer, DesignerPeerCategory.Elements, "acd-icon-actionSet");
+        this.registerPeer(GenietalkCards.TextBlock, DesignerPeers.TextBlockPeer, DesignerPeerCategory.Elements, "acd-icon-textBlock");
+        this.registerPeer(GenietalkCards.RichTextBlock, DesignerPeers.RichTextBlockPeer, DesignerPeerCategory.Elements, "acd-icon-richTextBlock");
+        this.registerPeer(GenietalkCards.Image, DesignerPeers.ImagePeer, DesignerPeerCategory.Elements, "acd-icon-image");
+        this.registerPeer(GenietalkCards.Media, DesignerPeers.MediaPeer, DesignerPeerCategory.Elements, "acd-icon-media");
+        this.registerPeer(GenietalkCards.ActionSet, DesignerPeers.ActionSetPeer, DesignerPeerCategory.Elements, "acd-icon-actionSet");
 
-        this.registerPeer(Adaptive.TextInput, DesignerPeers.TextInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputText");
-        this.registerPeer(Adaptive.DateInput, DesignerPeers.DateInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputDate");
-        this.registerPeer(Adaptive.TimeInput, DesignerPeers.TimeInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputTime");
-        this.registerPeer(Adaptive.ToggleInput, DesignerPeers.ToggleInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputToggle");
-        this.registerPeer(Adaptive.NumberInput, DesignerPeers.NumberInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputNumber");
-        this.registerPeer(Adaptive.ChoiceSetInput, DesignerPeers.ChoiceSetInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputChoiceSet");
+        this.registerPeer(GenietalkCards.TextInput, DesignerPeers.TextInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputText");
+        this.registerPeer(GenietalkCards.DateInput, DesignerPeers.DateInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputDate");
+        this.registerPeer(GenietalkCards.TimeInput, DesignerPeers.TimeInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputTime");
+        this.registerPeer(GenietalkCards.ToggleInput, DesignerPeers.ToggleInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputToggle");
+        this.registerPeer(GenietalkCards.NumberInput, DesignerPeers.NumberInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputNumber");
+        this.registerPeer(GenietalkCards.ChoiceSetInput, DesignerPeers.ChoiceSetInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputChoiceSet");
     }
 
-    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, cardElement: Adaptive.CardElement): DesignerPeers.CardElementPeer {
+    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, cardElement: GenietalkCards.CardElement): DesignerPeers.CardElementPeer {
         var registrationInfo = this.findTypeRegistration((<any>cardElement).constructor);
 
         var peer = registrationInfo ? new registrationInfo.peerType(parent, designerSurface, registrationInfo, cardElement) : new DesignerPeers.CardElementPeer(parent, designerSurface, this.defaultRegistration, cardElement);
@@ -134,14 +134,14 @@ export class ActionPeerRegistry extends DesignerPeerRegistry<ActionType, ActionP
     reset() {
         this.clear();
 
-        this.registerPeer(Adaptive.HttpAction, DesignerPeers.HttpActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionHttp");
-        this.registerPeer(Adaptive.SubmitAction, DesignerPeers.SubmitActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionSubmit");
-        this.registerPeer(Adaptive.OpenUrlAction, DesignerPeers.OpenUrlActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionOpenUrl");
-        this.registerPeer(Adaptive.ShowCardAction, DesignerPeers.ShowCardActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionShowCard");
-        this.registerPeer(Adaptive.ToggleVisibilityAction, DesignerPeers.ToggleVisibilityActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionToggleVisibility");
+        this.registerPeer(GenietalkCards.HttpAction, DesignerPeers.HttpActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionHttp");
+        this.registerPeer(GenietalkCards.SubmitAction, DesignerPeers.SubmitActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionSubmit");
+        this.registerPeer(GenietalkCards.OpenUrlAction, DesignerPeers.OpenUrlActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionOpenUrl");
+        this.registerPeer(GenietalkCards.ShowCardAction, DesignerPeers.ShowCardActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionShowCard");
+        this.registerPeer(GenietalkCards.ToggleVisibilityAction, DesignerPeers.ToggleVisibilityActionPeer, DesignerPeerCategory.Actions, "acd-icon-actionToggleVisibility");
     }
 
-    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, action: Adaptive.Action): DesignerPeers.ActionPeer {
+    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, action: GenietalkCards.Action): DesignerPeers.ActionPeer {
         var registrationInfo = this.findTypeRegistration((<any>action).constructor);
 
         var peer = registrationInfo ? new registrationInfo.peerType(parent, designerSurface, registrationInfo, action) : new DesignerPeers.ActionPeer(parent, designerSurface, this.defaultRegistration, action);
@@ -165,7 +165,7 @@ class DragHandle extends DraggableElement {
 
 export abstract class DesignContext {
     abstract get hostContainer(): HostContainer;
-    abstract get targetVersion(): Adaptive.Version;
+    abstract get targetVersion(): GenietalkCards.Version;
     abstract get dataStructure(): FieldDefinition;
     abstract get bindingPreviewMode(): BindingPreviewMode;
     abstract get sampleData(): any;
@@ -177,7 +177,7 @@ export class CardDesignerSurface {
 
     private _updateCount: number = 0;
 
-    private _card: Adaptive.AdaptiveCard;
+    private _card: GenietalkCards.AdaptiveCard;
     private _allPeers: Array<DesignerPeers.DesignerPeer> = [];
     private _rootPeer: DesignerPeers.DesignerPeer;
     private _cardHost: HTMLElement;
@@ -188,7 +188,7 @@ export class CardDesignerSurface {
     private _dragHandle: DragHandle;
     private _removeCommandElement: HTMLElement;
     private _peerCommandsHostElement: HTMLElement;
-    private _serializationContext: Adaptive.SerializationContext;
+    private _serializationContext: GenietalkCards.SerializationContext;
     private _isPreviewMode: boolean = false;
     private _dragVisual?: HTMLElement;
 
@@ -275,7 +275,7 @@ export class CardDesignerSurface {
         this._cardHost.innerHTML = "";
 
         if (this.onCardValidated) {
-            let allValidationEvents: Adaptive.IValidationEvent[] = [];
+            let allValidationEvents: GenietalkCards.IValidationEvent[] = [];
 
             for (let i = 0; i < this._serializationContext.eventCount; i++) {
                 allValidationEvents.push(this._serializationContext.getEventAt(i));
@@ -286,26 +286,26 @@ export class CardDesignerSurface {
             this.onCardValidated(allValidationEvents);
         }
 
-        let cardToRender: Adaptive.AdaptiveCard = this.card;
+        let cardToRender: GenietalkCards.AdaptiveCard = this.card;
 
         if (this.isPreviewMode) {
             let inputPayload = this.card.toJSON(this._serializationContext);
 
-            cardToRender = new Adaptive.AdaptiveCard();
+            cardToRender = new GenietalkCards.AdaptiveCard();
             cardToRender.hostConfig = this.card.hostConfig;
-            cardToRender.onExecuteAction = (action: Adaptive.Action) => {
+            cardToRender.onExecuteAction = (action: GenietalkCards.Action) => {
                 let message: string = "Action executed\n";
                 message += "    Title: " + action.title + "\n";
 
-                if (action instanceof Adaptive.OpenUrlAction) {
+                if (action instanceof GenietalkCards.OpenUrlAction) {
                     message += "    Type: OpenUrl\n";
                     message += "    Url: " + action.url + "\n";
                 }
-                else if (action instanceof Adaptive.SubmitAction) {
+                else if (action instanceof GenietalkCards.SubmitAction) {
                     message += "    Type: Submit";
                     message += "    Data: " + JSON.stringify(action.data);
                 }
-                else if (action instanceof Adaptive.HttpAction) {
+                else if (action instanceof GenietalkCards.HttpAction) {
                     message += "    Type: Http\n";
                     message += "    Url: " + action.url + "\n";
                     message += "    Method: " + action.method + "\n";
@@ -346,7 +346,7 @@ export class CardDesignerSurface {
                 }
             }
 
-            cardToRender.parse(outputPayload, new Adaptive.SerializationContext());
+            cardToRender.parse(outputPayload, new GenietalkCards.SerializationContext());
         }
 
         let renderedCard = cardToRender.render();
@@ -426,7 +426,7 @@ export class CardDesignerSurface {
         return result;
     }
 
-    private findCardElementPeer(cardElement: Adaptive.CardElement): DesignerPeers.CardElementPeer {
+    private findCardElementPeer(cardElement: GenietalkCards.CardElement): DesignerPeers.CardElementPeer {
         for (var i = 0; i < this._allPeers.length; i++) {
             var peer = this._allPeers[i];
 
@@ -438,7 +438,7 @@ export class CardDesignerSurface {
         return null;
     }
 
-    private findActionPeer(action: Adaptive.Action): DesignerPeers.ActionPeer {
+    private findActionPeer(action: GenietalkCards.Action): DesignerPeers.ActionPeer {
         for (var i = 0; i < this._allPeers.length; i++) {
             var peer = this._allPeers[i];
 
@@ -450,12 +450,12 @@ export class CardDesignerSurface {
         return null;
     }
 
-    private inlineCardExpanded(action: Adaptive.ShowCardAction, isExpanded: boolean) {
+    private inlineCardExpanded(action: GenietalkCards.ShowCardAction, isExpanded: boolean) {
         let peer = this.findCardElementPeer(action.card);
 
         if (isExpanded) {
             if (!peer) {
-                let registration = CardDesignerSurface.cardElementPeerRegistry.findTypeRegistration(Adaptive.AdaptiveCard);
+                let registration = CardDesignerSurface.cardElementPeerRegistry.findTypeRegistration(GenietalkCards.AdaptiveCard);
 
                 peer = new registration.peerType(peer, this, registration, action.card);
 
@@ -481,7 +481,7 @@ export class CardDesignerSurface {
         this.updateLayout();
     }
 
-    private get card(): Adaptive.AdaptiveCard {
+    private get card(): GenietalkCards.AdaptiveCard {
         return this._card;
     }
 
@@ -593,9 +593,9 @@ export class CardDesignerSurface {
         this.context.hostContainer.cardHost.innerHTML = "";
         this.context.hostContainer.cardHost.appendChild(rootElement);
 
-        this._card = new Adaptive.AdaptiveCard();
-        this._card.onInlineCardExpanded = (action: Adaptive.ShowCardAction, isExpanded: boolean) => { this.inlineCardExpanded(action, isExpanded); };
-        this._card.onPreProcessPropertyValue = (sender: Adaptive.CardObject, property: Adaptive.PropertyDefinition, value: any) => {
+        this._card = new GenietalkCards.AdaptiveCard();
+        this._card.onInlineCardExpanded = (action: GenietalkCards.ShowCardAction, isExpanded: boolean) => { this.inlineCardExpanded(action, isExpanded); };
+        this._card.onPreProcessPropertyValue = (sender: GenietalkCards.CardObject, property: GenietalkCards.PropertyDefinition, value: any) => {
             if (Shared.GlobalSettings.enableDataBindingSupport && typeof value === "string" && this.context.sampleData && this.context.bindingPreviewMode !== BindingPreviewMode.NoPreview) {
                 let expression = ACData.Template.parseInterpolatedString(value);
 
@@ -627,7 +627,7 @@ export class CardDesignerSurface {
         this.render();
     }
 
-    onCardValidated: (logEntries: Adaptive.IValidationEvent[]) => void;
+    onCardValidated: (logEntries: GenietalkCards.IValidationEvent[]) => void;
     onSelectedPeerChanged: (peer: DesignerPeers.DesignerPeer) => void;
     onLayoutUpdated: (isFullRefresh: boolean) => void;
 
@@ -643,7 +643,7 @@ export class CardDesignerSurface {
         return this.internalFindDropTarget(pointerPosition, this._rootPeer, peer);
     }
 
-    findPeer(cardObject: Adaptive.CardObject) {
+    findPeer(cardObject: GenietalkCards.CardObject) {
         for (let peer of this._allPeers) {
             if (peer.getCardObject() === cardObject) {
                 return peer;

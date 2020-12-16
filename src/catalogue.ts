@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as GenietalkCards from  "genietalkcards";
 import { Downloader } from "./downloader";
 
 export class CatalogueEntry {
@@ -134,15 +134,15 @@ export class SampleCatalogue {
         if (entries != null) {
             for (let entry of entries) {
                 if (typeof entry === "object") {
-                    let displayName = Adaptive.parseString(entry["displayName"]);
-                    let cardPayloadUrl = Adaptive.parseString(entry["cardPayloadUrl"]);
+                    let displayName = GenietalkCards.parseString(entry["displayName"]);
+                    let cardPayloadUrl = GenietalkCards.parseString(entry["cardPayloadUrl"]);
 
                     if (displayName && cardPayloadUrl) {
                         this._entries.push(
                             new CatalogueEntry(
                                 displayName,
                                 cardPayloadUrl,
-                                Adaptive.parseString(entry["dataSampleUrl"])));
+                                GenietalkCards.parseString(entry["dataSampleUrl"])));
                     }
                 }
             }

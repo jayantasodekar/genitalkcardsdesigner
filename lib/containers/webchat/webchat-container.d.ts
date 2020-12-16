@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 import { HostContainer } from "../host-container";
 export declare class WebChatContainer extends HostContainer {
     renderTo(hostElement: HTMLElement): void;

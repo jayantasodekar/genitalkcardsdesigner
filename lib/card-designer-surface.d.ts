@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 import { IPoint } from "./miscellaneous";
 import * as DesignerPeers from "./designer-peers";
 import { HostContainer } from "./containers";

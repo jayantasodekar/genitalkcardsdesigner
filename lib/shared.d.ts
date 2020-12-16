@@ -1,4 +1,4 @@
-import * as Adaptive from "adaptivecards";
+import * as Adaptive from "genietalkcards";
 export declare class GlobalSettings {
     static enableDataBindingSupport: boolean;
     static showDataStructureToolbox: boolean;

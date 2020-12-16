@@ -1,4 +1,4 @@
-import { CardObjectRegistry, CardElement, Action, HostConfig, SerializationContext, Version } from "adaptivecards";
+import { CardObjectRegistry, CardElement, Action, HostConfig, SerializationContext, Version } from "genietalkcards";
 export declare abstract class HostContainer {
     private _cardHost;
     private _elementsRegistry;
