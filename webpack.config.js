@@ -106,6 +106,11 @@ module.exports = (env, argv) => {
 				from: 'src/containers/**/*.jpg',
 				to: 'containers/',
 				flatten: true
+			},
+			{
+				from: 'src/samples/*.json',
+				to: 'samples/',
+				flatten: true
 			}]})
 			// ,
 			// new CopyWebpackPlugin([{

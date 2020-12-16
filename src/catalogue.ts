@@ -151,7 +151,7 @@ export class SampleCatalogue {
 
     onDownloaded: (sender: SampleCatalogue) => void;
 
-    constructor(url: string = "./sample-catalogue.json") {
+    constructor(url: string = "./samples/sample-catalogue.json") {
         this.url = url;
     }
 

@@ -603,47 +603,47 @@ export class CardDesigner extends Designer.DesignContext {
         //     this.toolbar.addElement(this._versionChoicePicker);
         // }
 
-        // this._newCardButton = new ToolbarButton(
-        //     CardDesigner.ToolbarCommands.NewCard,
-        //     "New card",
-        //     "acd-icon-newCard",
-        //     (sender: ToolbarButton) => {
-        //         let dialog = new OpenSampleDialog(this._sampleCatalogue);
-        //         dialog.title = "Pick a sample as a starting point";
-        //         dialog.closeButton.caption = "Cancel";
-        //         dialog.width = "80%";
-        //         dialog.height = "80%";
-        //         dialog.onClose = (d) => {
-        //             if (dialog.selectedSample) {
-        //                 dialog.selectedSample.onDownloaded = () => {
-        //                     try {
-        //                         let cardPayload = JSON.parse(dialog.selectedSample.cardPayload);
+        this._newCardButton = new ToolbarButton(
+            CardDesigner.ToolbarCommands.NewCard,
+            "New card",
+            "acd-icon-newCard",
+            (sender: ToolbarButton) => {
+                let dialog = new OpenSampleDialog(this._sampleCatalogue);
+                dialog.title = "Pick a sample as a starting point";
+                dialog.closeButton.caption = "Cancel";
+                dialog.width = "80%";
+                dialog.height = "80%";
+                dialog.onClose = (d) => {
+                    if (dialog.selectedSample) {
+                        dialog.selectedSample.onDownloaded = () => {
+                            try {
+                                let cardPayload = JSON.parse(dialog.selectedSample.cardPayload);
 
-        //                         this.setCardPayload(cardPayload, true);
-        //                     } catch {
-        //                         alert("The sample could not be loaded.")
-        //                     }
+                                this.setCardPayload(cardPayload, true);
+                            } catch {
+                                alert("The sample could not be loaded.")
+                            }
 
-        //                     if (dialog.selectedSample.sampleData) {
-        //                         try {
-        //                             let sampleDataPayload = JSON.parse(dialog.selectedSample.sampleData);
+                            if (dialog.selectedSample.sampleData) {
+                                try {
+                                    let sampleDataPayload = JSON.parse(dialog.selectedSample.sampleData);
 
-        //                             this.setSampleDataPayload(sampleDataPayload);
-        //                             this.dataStructure = FieldDefinition.deriveFrom(sampleDataPayload);
-        //                         }
-        //                         catch {
-        //                             alert("The sample could not be loaded.")
-        //                         }
-        //                     }
-        //                 };
-        //                 dialog.selectedSample.download();
-        //             }
-        //         };
-        //         dialog.open();
-        //     });
-        // this._newCardButton.separator = true;
+                                    this.setSampleDataPayload(sampleDataPayload);
+                                    this.dataStructure = FieldDefinition.deriveFrom(sampleDataPayload);
+                                }
+                                catch {
+                                    alert("The sample could not be loaded.")
+                                }
+                            }
+                        };
+                        dialog.selectedSample.download();
+                    }
+                };
+                dialog.open();
+            });
+        this._newCardButton.separator = true;
 
-        //this.toolbar.addElement(this._newCardButton);
+        this.toolbar.addElement(this._newCardButton);
 
         // if (this._hostContainers && this._hostContainers.length > 0) {
         //     this._hostContainerChoicePicker = new ToolbarChoicePicker(CardDesigner.ToolbarCommands.HostAppPicker);
