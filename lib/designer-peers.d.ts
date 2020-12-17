@@ -1,4 +1,4 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 import { DraggableElement } from "./draggable-element";
 import { PeerCommand } from "./peer-command";
 import { CardDesignerSurface, DesignContext } from "./card-designer-surface";
@@ -10,7 +10,7 @@ export declare abstract class DesignerPeerInplaceEditor {
     abstract applyChanges(): any;
     abstract render(): HTMLElement;
 }
-export declare abstract class CardElementPeerInplaceEditor<TCardElement extends Adaptive.CardElement> extends DesignerPeerInplaceEditor {
+export declare abstract class CardElementPeerInplaceEditor<TCardElement extends GenietalkCards.CardElement> extends DesignerPeerInplaceEditor {
     readonly cardElement: TCardElement;
     constructor(cardElement: TCardElement);
 }
@@ -33,7 +33,7 @@ export declare class PropertySheetCategory {
     static readonly InlineAction = "Inline action";
     private _entries;
     constructor(name: string);
-    render(container: Adaptive.Container, context: PropertySheetContext, displayCategoryName: boolean): void;
+    render(container: GenietalkCards.Container, context: PropertySheetContext, displayCategoryName: boolean): void;
     add(...entries: PropertySheetEntry[]): void;
     remove(...entries: PropertySheetEntry[]): void;
     getEntryAt(index: number): PropertySheetEntry;
@@ -45,7 +45,7 @@ export declare class PropertySheet {
     constructor(displayCategoryNames?: boolean);
     add(categoryName: string, ...entries: PropertySheetEntry[]): void;
     remove(...entries: PropertySheetEntry[]): void;
-    render(container: Adaptive.Container, context: PropertySheetContext): void;
+    render(container: GenietalkCards.Container, context: PropertySheetContext): void;
 }
 export declare class PropertySheetContext {
     readonly designContext: DesignContext;
@@ -55,59 +55,59 @@ export declare class PropertySheetContext {
     get target(): object;
 }
 export declare abstract class PropertySheetEntry {
-    readonly targetVersion: Adaptive.TargetVersion;
-    abstract render(context: PropertySheetContext): Adaptive.CardElement;
-    constructor(targetVersion: Adaptive.TargetVersion);
+    readonly targetVersion: GenietalkCards.TargetVersion;
+    abstract render(context: PropertySheetContext): GenietalkCards.CardElement;
+    constructor(targetVersion: GenietalkCards.TargetVersion);
 }
 export declare class SubPropertySheetEntry {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly target: object;
     readonly propertySheet: PropertySheet;
-    render(context: PropertySheetContext): Adaptive.CardElement;
-    constructor(targetVersion: Adaptive.TargetVersion, target: object, propertySheet: PropertySheet);
+    render(context: PropertySheetContext): GenietalkCards.CardElement;
+    constructor(targetVersion: GenietalkCards.TargetVersion, target: object, propertySheet: PropertySheet);
 }
 export declare class CustomPropertySheetEntry extends PropertySheetEntry {
-    readonly targetVersion: Adaptive.TargetVersion;
-    readonly onRender: (context: PropertySheetContext) => Adaptive.CardElement;
-    render(context: PropertySheetContext): Adaptive.CardElement;
-    constructor(targetVersion: Adaptive.TargetVersion, onRender: (context: PropertySheetContext) => Adaptive.CardElement);
+    readonly targetVersion: GenietalkCards.TargetVersion;
+    readonly onRender: (context: PropertySheetContext) => GenietalkCards.CardElement;
+    render(context: PropertySheetContext): GenietalkCards.CardElement;
+    constructor(targetVersion: GenietalkCards.TargetVersion, onRender: (context: PropertySheetContext) => GenietalkCards.CardElement);
 }
 export interface IPropertySheetEditorCommand {
     caption: string;
     onExecute: (sender: SingleInputPropertyEditor, clickedElement: HTMLElement) => void;
 }
 export declare abstract class SingleInputPropertyEditor extends PropertySheetEntry {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     readonly causesPropertySheetRefresh: boolean;
-    protected abstract createInput(context: PropertySheetContext): Adaptive.Input;
+    protected abstract createInput(context: PropertySheetContext): GenietalkCards.Input;
     protected getPropertyValue(context: PropertySheetContext): any;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
     protected getAdditionalCommands(context: PropertySheetContext): IPropertySheetEditorCommand[];
-    render(context: PropertySheetContext): Adaptive.CardElement;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, causesPropertySheetRefresh?: boolean);
+    render(context: PropertySheetContext): GenietalkCards.CardElement;
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, causesPropertySheetRefresh?: boolean);
 }
 export declare class StringPropertyEditor extends SingleInputPropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     readonly allowBinding: boolean;
     readonly isMultiline: boolean;
     readonly causesPropertySheetRefresh: boolean;
-    protected createInput(context: PropertySheetContext): Adaptive.Input;
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input;
     protected getAdditionalCommands(context: PropertySheetContext): IPropertySheetEditorCommand[];
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, allowBinding?: boolean, isMultiline?: boolean, causesPropertySheetRefresh?: boolean);
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, allowBinding?: boolean, isMultiline?: boolean, causesPropertySheetRefresh?: boolean);
 }
 export declare class NumberPropertyEditor extends SingleInputPropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     readonly defaultValue: number | undefined;
     readonly causesPropertySheetRefresh: boolean;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
-    protected createInput(context: PropertySheetContext): Adaptive.Input;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, defaultValue?: number | undefined, causesPropertySheetRefresh?: boolean);
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input;
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, defaultValue?: number | undefined, causesPropertySheetRefresh?: boolean);
 }
 export declare class ObjectPropertyEditor extends StringPropertyEditor {
     protected getPropertyValue(context: PropertySheetContext): any;
@@ -120,29 +120,29 @@ export declare class CustomCardObjectPropertyEditor extends StringPropertyEditor
 export declare class BooleanPropertyEditor extends SingleInputPropertyEditor {
     protected getPropertyValue(context: PropertySheetContext): any;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
-    protected createInput(context: PropertySheetContext): Adaptive.Input;
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input;
 }
 export interface IVersionedChoice {
-    targetVersion: Adaptive.TargetVersion;
+    targetVersion: GenietalkCards.TargetVersion;
     name: string;
     value: string;
 }
 export declare class ChoicePropertyEditor extends SingleInputPropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     readonly choices: IVersionedChoice[];
     readonly causesPropertySheetRefresh: boolean;
-    protected createInput(context: PropertySheetContext): Adaptive.Input;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, choices: IVersionedChoice[], causesPropertySheetRefresh?: boolean);
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input;
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, choices: IVersionedChoice[], causesPropertySheetRefresh?: boolean);
 }
 export declare class ContainerStylePropertyEditor extends ChoicePropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     protected getPropertyValue(context: PropertySheetContext): any;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string);
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string);
 }
 export declare class ColumnWidthPropertyEditor extends ChoicePropertyEditor {
     protected getPropertyValue(context: PropertySheetContext): any;
@@ -152,36 +152,36 @@ export declare class HeightPropertyEditor extends ChoicePropertyEditor {
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
 }
 export declare class SizeAndUnitPropertyEditor extends NumberPropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
-    readonly sizeUnit: Adaptive.SizeUnit;
+    readonly sizeUnit: GenietalkCards.SizeUnit;
     readonly defaultValue: number | undefined;
     readonly causesPropertySheetRefresh: boolean;
     protected getPropertyValue(context: PropertySheetContext): any;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, sizeUnit: Adaptive.SizeUnit, defaultValue?: number | undefined, causesPropertySheetRefresh?: boolean);
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, sizeUnit: GenietalkCards.SizeUnit, defaultValue?: number | undefined, causesPropertySheetRefresh?: boolean);
 }
 export declare class ActionPropertyEditor extends SingleInputPropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     readonly forbiddenActionTypes: string[];
     readonly causesPropertySheetRefresh: boolean;
     protected getPropertyValue(context: PropertySheetContext): any;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
-    protected createInput(context: PropertySheetContext): Adaptive.Input;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, forbiddenActionTypes?: string[], causesPropertySheetRefresh?: boolean);
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input;
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, forbiddenActionTypes?: string[], causesPropertySheetRefresh?: boolean);
 }
 export declare class CompoundPropertyEditor extends PropertySheetEntry {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly entries: PropertySheetEntry[];
-    render(context: PropertySheetContext): Adaptive.CardElement;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, entries?: PropertySheetEntry[]);
+    render(context: PropertySheetContext): GenietalkCards.CardElement;
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, entries?: PropertySheetEntry[]);
 }
 export declare class EnumPropertyEditor extends SingleInputPropertyEditor {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly propertyName: string;
     readonly label: string;
     readonly enumType: {
@@ -189,13 +189,13 @@ export declare class EnumPropertyEditor extends SingleInputPropertyEditor {
     };
     readonly causesPropertySheetRefresh: boolean;
     protected setPropertyValue(context: PropertySheetContext, value: string): void;
-    protected createInput(context: PropertySheetContext): Adaptive.Input;
-    constructor(targetVersion: Adaptive.TargetVersion, propertyName: string, label: string, enumType: {
+    protected createInput(context: PropertySheetContext): GenietalkCards.Input;
+    constructor(targetVersion: GenietalkCards.TargetVersion, propertyName: string, label: string, enumType: {
         [s: number]: string;
     }, causesPropertySheetRefresh?: boolean);
 }
 declare class NameValuePairPropertyEditor extends PropertySheetEntry {
-    readonly targetVersion: Adaptive.TargetVersion;
+    readonly targetVersion: GenietalkCards.TargetVersion;
     readonly collectionPropertyName: string;
     readonly namePropertyName: string;
     readonly valuePropertyName: string;
@@ -205,8 +205,8 @@ declare class NameValuePairPropertyEditor extends PropertySheetEntry {
     readonly addButtonTitle: string;
     readonly messageIfEmpty: string;
     private collectionChanged;
-    render(context: PropertySheetContext): Adaptive.CardElement;
-    constructor(targetVersion: Adaptive.TargetVersion, collectionPropertyName: string, namePropertyName: string, valuePropertyName: string, createCollectionItem: (name: string, value: string) => any, namePropertyLabel?: string, valuePropertyLabel?: string, addButtonTitle?: string, messageIfEmpty?: string);
+    render(context: PropertySheetContext): GenietalkCards.CardElement;
+    constructor(targetVersion: GenietalkCards.TargetVersion, collectionPropertyName: string, namePropertyName: string, valuePropertyName: string, createCollectionItem: (name: string, value: string) => any, namePropertyLabel?: string, valuePropertyLabel?: string, addButtonTitle?: string, messageIfEmpty?: string);
 }
 export declare abstract class DesignerPeer extends DraggableElement {
     static readonly idProperty: StringPropertyEditor;
@@ -239,8 +239,8 @@ export declare abstract class DesignerPeer extends DraggableElement {
     onChanged: (sender: DesignerPeer, updatePropertySheet: boolean) => void;
     onPeerRemoved: (sender: DesignerPeer) => void;
     onPeerAdded: (sender: DesignerPeer, newPeer: DesignerPeer) => void;
-    getCardObject(): Adaptive.CardObject;
-    constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, cardObject: Adaptive.CardObject);
+    getCardObject(): GenietalkCards.CardObject;
+    constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, cardObject: GenietalkCards.CardObject);
     abstract getBoundingRect(): Rect;
     abstract getCardObjectBoundingRect(): Rect;
     changed(updatePropertySheet: boolean): void;
@@ -257,7 +257,7 @@ export declare abstract class DesignerPeer extends DraggableElement {
     remove(onlyFromCard: boolean, removeChildren: boolean): boolean;
     addElementsToDesignerSurface(designerSurface: HTMLElement, processChildren?: boolean): void;
     removeElementsFromDesignerSurface(processChildren?: boolean): void;
-    buildPropertySheetCard(context: DesignContext): Adaptive.AdaptiveCard;
+    buildPropertySheetCard(context: DesignContext): GenietalkCards.GenietalkCard;
     scrollIntoView(): void;
     get parent(): DesignerPeer;
     set parent(value: DesignerPeer);
@@ -270,19 +270,19 @@ export declare class ActionPeer extends DesignerPeer {
     static readonly iconUrlProperty: StringPropertyEditor;
     protected doubleClick(e: MouseEvent): void;
     protected internalRemove(): boolean;
-    constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, action: Adaptive.Action);
+    constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, action: GenietalkCards.Action);
     protected internalGetTreeItemText(): string;
     isDraggable(): boolean;
     getBoundingRect(): Rect;
     getCardObjectBoundingRect(): Rect;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
-    get action(): Adaptive.Action;
+    get action(): GenietalkCards.Action;
 }
-export declare abstract class TypedActionPeer<TAction extends Adaptive.Action> extends ActionPeer {
+export declare abstract class TypedActionPeer<TAction extends GenietalkCards.Action> extends ActionPeer {
     constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, action: TAction);
     get action(): TAction;
 }
-export declare class HttpActionPeer extends TypedActionPeer<Adaptive.HttpAction> {
+export declare class HttpActionPeer extends TypedActionPeer<GenietalkCards.HttpAction> {
     static readonly ignoreInputValidationProperty: BooleanPropertyEditor;
     static readonly methodProperty: ChoicePropertyEditor;
     static readonly urlProperty: StringPropertyEditor;
@@ -290,19 +290,19 @@ export declare class HttpActionPeer extends TypedActionPeer<Adaptive.HttpAction>
     static readonly headersProperty: NameValuePairPropertyEditor;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class SubmitActionPeer extends TypedActionPeer<Adaptive.SubmitAction> {
+export declare class SubmitActionPeer extends TypedActionPeer<GenietalkCards.SubmitAction> {
     static readonly ignoreInputValidationProperty: BooleanPropertyEditor;
     static readonly dataProperty: ObjectPropertyEditor;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class OpenUrlActionPeer extends TypedActionPeer<Adaptive.OpenUrlAction> {
+export declare class OpenUrlActionPeer extends TypedActionPeer<GenietalkCards.OpenUrlAction> {
     static readonly urlProperty: StringPropertyEditor;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class ShowCardActionPeer extends TypedActionPeer<Adaptive.ShowCardAction> {
+export declare class ShowCardActionPeer extends TypedActionPeer<GenietalkCards.ShowCardAction> {
     protected getToolTip(): string;
 }
-export declare class ToggleVisibilityActionPeer extends TypedActionPeer<Adaptive.ToggleVisibilityAction> {
+export declare class ToggleVisibilityActionPeer extends TypedActionPeer<GenietalkCards.ToggleVisibilityAction> {
 }
 export declare class CardElementPeer extends DesignerPeer {
     static readonly dataContextProperty: CustomCardObjectPropertyEditor;
@@ -313,10 +313,10 @@ export declare class CardElementPeer extends DesignerPeer {
     static readonly separatorProperty: BooleanPropertyEditor;
     static readonly horizontalAlignmentProperty: EnumPropertyEditor;
     static readonly heightProperty: HeightPropertyEditor;
-    protected insertElementAfter(newElement: Adaptive.CardElement): void;
+    protected insertElementAfter(newElement: GenietalkCards.CardElement): void;
     protected internalRemove(): boolean;
     protected internalUpdateCssStyles(): void;
-    constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, cardElement: Adaptive.CardElement);
+    constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, cardElement: GenietalkCards.CardElement);
     getTreeItemText(): string;
     initializeCardElement(): void;
     canDrop(peer: DesignerPeer): boolean;
@@ -324,24 +324,24 @@ export declare class CardElementPeer extends DesignerPeer {
     getBoundingRect(): Rect;
     getCardObjectBoundingRect(): Rect;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
-    get cardElement(): Adaptive.CardElement;
+    get cardElement(): GenietalkCards.CardElement;
 }
-export declare abstract class TypedCardElementPeer<TCardElement extends Adaptive.CardElement> extends CardElementPeer {
+export declare abstract class TypedCardElementPeer<TCardElement extends GenietalkCards.CardElement> extends CardElementPeer {
     constructor(parent: DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeerRegistrationBase, cardElement: TCardElement);
     get cardElement(): TCardElement;
 }
-export declare class AdaptiveCardPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard> {
+export declare class AdaptiveCardPeer extends TypedCardElementPeer<GenietalkCards.GenietalkCard> {
     static readonly langProperty: StringPropertyEditor;
     static readonly fallbackTextProperty: StringPropertyEditor;
     static readonly speakProperty: StringPropertyEditor;
-    protected addAction(action: Adaptive.Action): void;
+    protected addAction(action: GenietalkCards.Action): void;
     protected internalRemove(): boolean;
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>): void;
     isDraggable(): boolean;
     canBeRemoved(): boolean;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class ColumnPeer extends TypedCardElementPeer<Adaptive.Column> {
+export declare class ColumnPeer extends TypedCardElementPeer<GenietalkCards.Column> {
     private static readonly pixelWidthProperty;
     private static readonly weightProperty;
     static readonly widthProperty: ColumnWidthPropertyEditor;
@@ -350,14 +350,14 @@ export declare class ColumnPeer extends TypedCardElementPeer<Adaptive.Column> {
     isDraggable(): boolean;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class ColumnSetPeer extends TypedCardElementPeer<Adaptive.ColumnSet> {
+export declare class ColumnSetPeer extends TypedCardElementPeer<GenietalkCards.ColumnSet> {
     protected isContainer(): boolean;
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>): void;
     protected internalGetTreeItemText(): string;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
     canDrop(peer: DesignerPeer): boolean;
 }
-export declare class ContainerPeer extends TypedCardElementPeer<Adaptive.Container> {
+export declare class ContainerPeer extends TypedCardElementPeer<GenietalkCards.Container> {
     static readonly selectActionProperty: ActionPropertyEditor;
     static readonly minHeightProperty: NumberPropertyEditor;
     static readonly verticalContentAlignmentProperty: EnumPropertyEditor;
@@ -367,16 +367,16 @@ export declare class ContainerPeer extends TypedCardElementPeer<Adaptive.Contain
     protected isContainer(): boolean;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class ActionSetPeer extends TypedCardElementPeer<Adaptive.AdaptiveCard> {
-    protected addAction(action: Adaptive.Action): void;
+export declare class ActionSetPeer extends TypedCardElementPeer<GenietalkCards.GenietalkCard> {
+    protected addAction(action: GenietalkCards.Action): void;
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>): void;
 }
-export declare class ImageSetPeer extends TypedCardElementPeer<Adaptive.ImageSet> {
+export declare class ImageSetPeer extends TypedCardElementPeer<GenietalkCards.ImageSet> {
     static readonly ImageSizeProperty: EnumPropertyEditor;
     protected internalAddCommands(context: DesignContext, commands: Array<PeerCommand>): void;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class ImagePeer extends TypedCardElementPeer<Adaptive.Image> {
+export declare class ImagePeer extends TypedCardElementPeer<GenietalkCards.Image> {
     static readonly urlProperty: StringPropertyEditor;
     static readonly altTextProperty: StringPropertyEditor;
     static readonly sizeProperty: EnumPropertyEditor;
@@ -390,24 +390,24 @@ export declare class ImagePeer extends TypedCardElementPeer<Adaptive.Image> {
     getBoundingRect(): Rect;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class MediaPeer extends TypedCardElementPeer<Adaptive.Media> {
+export declare class MediaPeer extends TypedCardElementPeer<GenietalkCards.Media> {
     static readonly altTextProperty: StringPropertyEditor;
     static readonly posterUrlProperty: StringPropertyEditor;
     static readonly sourcesProperty: NameValuePairPropertyEditor;
     protected internalGetTreeItemText(): string;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class FactSetPeer extends TypedCardElementPeer<Adaptive.FactSet> {
+export declare class FactSetPeer extends TypedCardElementPeer<GenietalkCards.FactSet> {
     static readonly factsProperty: NameValuePairPropertyEditor;
     protected internalGetTreeItemText(): string;
     initializeCardElement(): void;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare abstract class InputPeer<TInput extends Adaptive.Input> extends TypedCardElementPeer<TInput> {
+export declare abstract class InputPeer<TInput extends GenietalkCards.Input> extends TypedCardElementPeer<TInput> {
     static readonly validationProperty: CompoundPropertyEditor;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class TextInputPeer extends InputPeer<Adaptive.TextInput> {
+export declare class TextInputPeer extends InputPeer<GenietalkCards.TextInput> {
     static readonly defaultValueProperty: StringPropertyEditor;
     static readonly placeholderProperty: StringPropertyEditor;
     static readonly isMultilineProperty: BooleanPropertyEditor;
@@ -417,7 +417,7 @@ export declare class TextInputPeer extends InputPeer<Adaptive.TextInput> {
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
     initializeCardElement(): void;
 }
-export declare class NumberInputPeer extends InputPeer<Adaptive.NumberInput> {
+export declare class NumberInputPeer extends InputPeer<GenietalkCards.NumberInput> {
     static readonly defaultValueProperty: NumberPropertyEditor;
     static readonly placeholderProperty: StringPropertyEditor;
     static readonly minProperty: NumberPropertyEditor;
@@ -425,19 +425,19 @@ export declare class NumberInputPeer extends InputPeer<Adaptive.NumberInput> {
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
     initializeCardElement(): void;
 }
-export declare class DateInputPeer extends InputPeer<Adaptive.DateInput> {
+export declare class DateInputPeer extends InputPeer<GenietalkCards.DateInput> {
     static readonly defaultValueProperty: StringPropertyEditor;
     static readonly minProperty: StringPropertyEditor;
     static readonly maxProperty: StringPropertyEditor;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class TimeInputPeer extends InputPeer<Adaptive.TimeInput> {
+export declare class TimeInputPeer extends InputPeer<GenietalkCards.TimeInput> {
     static readonly defaultValueProperty: StringPropertyEditor;
     static readonly minProperty: StringPropertyEditor;
     static readonly maxProperty: StringPropertyEditor;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
 }
-export declare class ToggleInputPeer extends InputPeer<Adaptive.ToggleInput> {
+export declare class ToggleInputPeer extends InputPeer<GenietalkCards.ToggleInput> {
     static readonly defaultValueProperty: StringPropertyEditor;
     static readonly titleProperty: StringPropertyEditor;
     static readonly valueOnProperty: StringPropertyEditor;
@@ -446,7 +446,7 @@ export declare class ToggleInputPeer extends InputPeer<Adaptive.ToggleInput> {
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
     initializeCardElement(): void;
 }
-export declare class ChoiceSetInputPeer extends InputPeer<Adaptive.ChoiceSetInput> {
+export declare class ChoiceSetInputPeer extends InputPeer<GenietalkCards.ChoiceSetInput> {
     static readonly defaultValueProperty: StringPropertyEditor;
     static readonly placeholderProperty: StringPropertyEditor;
     static readonly isMultiselectProperty: BooleanPropertyEditor;
@@ -456,7 +456,7 @@ export declare class ChoiceSetInputPeer extends InputPeer<Adaptive.ChoiceSetInpu
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
     initializeCardElement(): void;
 }
-export declare class TextBlockPeer extends TypedCardElementPeer<Adaptive.TextBlock> {
+export declare class TextBlockPeer extends TypedCardElementPeer<GenietalkCards.TextBlock> {
     static readonly textProperty: StringPropertyEditor;
     static readonly wrapProperty: BooleanPropertyEditor;
     static readonly maxLinesProperty: NumberPropertyEditor;
@@ -472,7 +472,7 @@ export declare class TextBlockPeer extends TypedCardElementPeer<Adaptive.TextBlo
     getToolTip(): string;
     initializeCardElement(): void;
 }
-export declare class RichTextBlockPeer extends TypedCardElementPeer<Adaptive.RichTextBlock> {
+export declare class RichTextBlockPeer extends TypedCardElementPeer<GenietalkCards.RichTextBlock> {
     protected internalGetTreeItemText(): string;
     populatePropertySheet(propertySheet: PropertySheet, defaultCategory?: string): void;
     initializeCardElement(): void;

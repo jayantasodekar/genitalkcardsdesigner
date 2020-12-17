@@ -46,116 +46,727 @@ export const otherTestPayload: string = `{
 }`;
 
 export const defaultPayload: string = `{
-    "type": "AdaptiveCard",
+    "type": "GenietalkCard",
+    "version": "1.0",
     "body": [
-        {
-            "type": "TextBlock",
-            "size": "Medium",
-            "weight": "Bolder",
-            "text": "Publish Adaptive Card schema"
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "style": "Person",
-                            "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
-                            "size": "Small"
-                        }
-                    ],
-                    "width": "auto"
-                },
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "weight": "Bolder",
-                            "text": "Matt Hidinger",
-                            "wrap": true
-                        },
-                        {
-                            "type": "TextBlock",
-                            "spacing": "None",
-                            "text": "Created {{DATE(2017-02-14T06:08:39Z,SHORT)}}",
-                            "isSubtle": true,
-                            "wrap": true
-                        }
-                    ],
-                    "width": "stretch"
-                }
-            ]
-        },
-        {
-            "type": "TextBlock",
-            "text": "Now that we have defined the main rules and features of the format, we need to produce a schema and publish it to GitHub. The schema will be the starting point of our reference documentation.",
-            "wrap": true
-        },
-        {
-            "type": "FactSet",
-            "facts": [
-                {
-                    "title": "Board:",
-                    "value": "Adaptive Card"
-                },
-                {
-                    "title": "List:",
-                    "value": "Backlog"
-                },
-                {
-                    "title": "Assigned to:",
-                    "value": "Matt Hidinger"
-                },
-                {
-                    "title": "Due date:",
-                    "value": "Not set"
-                }
-            ]
-        }
-    ],
-    "actions": [
-        {
-            "type": "Action.ShowCard",
-            "title": "Set due date",
-            "card": {
-                "type": "AdaptiveCard",
-                "body": [
-                    {
-                        "type": "Input.Date",
-                        "id": "dueDate"
-                    },
-                    {
-                        "type": "Input.Text",
-                        "id": "comment",
-                        "placeholder": "Add a comment",
-                        "isMultiline": true
-                    }
-                ],
-                "actions": [
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "OK",
-                        "url": "http://adaptivecards.io"
-                    }
-                ],
-                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+    {
+"type": "Carousel",
+"displayitemcount":2,
+"carouselitems": [
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
             }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },
+    
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    }
+]
+},
+{
+"type": "Carousel",
+"displayitemcount":2,
+"carouselitems": [
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },
+    
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    }
+]
+},
+    {
+            "type": "Image",
+            "url": "https://genietalkcards.io/content/genietalk-card-50.png"
+        },
+        {
+            "type": "TextBlock",
+            "text": "Hello **Genietalk Cards!**"
+        }
+        
+    ],
+    "actions": [{
+            "type": "Action.OpenUrl",
+            "title": "Learn more",
+            "url": "https://genietalkcards.io"
         },
         {
             "type": "Action.OpenUrl",
-            "title": "View",
-            "url": "http://adaptivecards.io"
+            "title": "GitHub",
+            "url": "https://github.com/Microsoft/GenietalkCards"
         }
+        ,
+        {
+            "type": "Action.SubmitQuery",
+            "title": "SubmitQuery",
+            "query": "hello"
+        }
+    ]
+}`;
+export const defaultTemplatePayload: string = `{
+    "type": "GenietalkCard",
+    "version": "1.0",
+    "body": [
+    {
+"type": "Carousel",
+"displayitemcount":2,
+"carouselitems": [
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },
+    
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    }
+]
+},
+{
+"type": "Carousel",
+"displayitemcount":2,
+"carouselitems": [
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },{
+        "type": "CarouselItem",
+        "width": "auto",
+        "items": [
+            {
+                "type": "Image",
+                "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "size": "small",
+                "style": "person"
+            }
+        ]
+    },
+    
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    },
+    {
+        "type": "CarouselItem",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Matt Hidinger",
+                "weight": "bolder",
+                "wrap": true
+            },
+            {
+                "type": "TextBlock",
+                "spacing": "none",
+                "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                "isSubtle": true,
+                "wrap": true
+            }
+        ]
+    }
+]
+},
+    {
+            "type": "Image",
+            "url": "https://genietalkcards.io/content/genietalk-card-50.png"
+        },
+        {
+            "type": "TextBlock",
+            "text": "Hello **Genietalk Cards!**"
+        }
+        
     ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.0"
+    "actions": [{
+            "type": "Action.OpenUrl",
+            "title": "Learn more",
+            "url": "https://genietalkcards.io"
+        },
+        {
+            "type": "Action.OpenUrl",
+            "title": "GitHub",
+            "url": "https://github.com/Microsoft/GenietalkCards"
+        }
+        ,
+        {
+            "type": "Action.SubmitQuery",
+            "title": "SubmitQuery",
+            "query": "hello"
+        }
+    ]
 }`;
 
-export const defaultTemplatePayload: string = `{
+export const defaultTemplatePayload1: string = `{
     "type": "AdaptiveCard",
     "body": [
         {
@@ -277,7 +888,7 @@ export const defaultTemplatePayload: string = `{
 }`;
 
 export const defaultDataPayload: string = `{
-    "title": "Publish Adaptive Card Schema",
+    "title": "Publish Adaptive Card Schema11",
     "description": "Now that we have defined the main rules and features of the format, we need to produce a schema and publish it to GitHub. The schema will be the starting point of our reference documentation.",
     "creator": {
         "name": "Matt Hidinger",

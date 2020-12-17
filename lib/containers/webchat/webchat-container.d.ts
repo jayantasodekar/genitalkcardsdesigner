@@ -1,7 +1,7 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 import { HostContainer } from "../host-container";
 export declare class WebChatContainer extends HostContainer {
     renderTo(hostElement: HTMLElement): void;
-    getHostConfig(): Adaptive.HostConfig;
-    get targetVersion(): Adaptive.Version;
+    getHostConfig(): GenietalkCards.HostConfig;
+    get targetVersion(): GenietalkCards.Version;
 }

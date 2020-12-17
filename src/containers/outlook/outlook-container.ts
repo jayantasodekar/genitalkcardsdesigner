@@ -51,8 +51,8 @@ export class OutlookContainer extends HostContainer {
             element.rtl = source["rtl"];
         }
 
-        if (element instanceof GenietalkCards.AdaptiveCard) {
-            var card = <GenietalkCards.AdaptiveCard>element;
+        if (element instanceof GenietalkCards.GenietalkCard) {
+            var card = <GenietalkCards.GenietalkCard>element;
             var actionArray: Array<GenietalkCards.Action> = [];
 
             card["resources"] = { actions: actionArray };
@@ -96,7 +96,7 @@ export class OutlookContainer extends HostContainer {
 
     public anchorClicked(element: GenietalkCards.CardElement, anchor: HTMLAnchorElement): boolean {
         var regEx = /^action:([a-z0-9]+)$/ig;
-        var rootCard = element.getRootElement() as GenietalkCards.AdaptiveCard;
+        var rootCard = element.getRootElement() as GenietalkCards.GenietalkCard;
         var matches = regEx.exec(anchor.href);
 
         if (matches) {

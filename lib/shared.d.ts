@@ -1,4 +1,4 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 export declare class GlobalSettings {
     static enableDataBindingSupport: boolean;
     static showDataStructureToolbox: boolean;
@@ -7,4 +7,4 @@ export declare class GlobalSettings {
     static selectedHostContainerControlsTargetVersion: boolean;
     static showTargetVersionMismatchWarning: boolean;
 }
-export declare var SupportedTargetVersions: Adaptive.Version[];
+export declare var SupportedTargetVersions: GenietalkCards.Version[];

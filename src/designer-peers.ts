@@ -1083,8 +1083,8 @@ export abstract class DesignerPeer extends DraggableElement {
         }
     }
 
-    buildPropertySheetCard(context: DesignContext): GenietalkCards.AdaptiveCard {
-        let card = new GenietalkCards.AdaptiveCard();
+    buildPropertySheetCard(context: DesignContext): GenietalkCards.GenietalkCard {
+        let card = new GenietalkCards.GenietalkCard();
         card.padding = new GenietalkCards.PaddingDefinition(
             GenietalkCards.Spacing.Small,
             GenietalkCards.Spacing.Small,
@@ -1562,7 +1562,7 @@ export abstract class TypedCardElementPeer<TCardElement extends GenietalkCards.C
     }
 }
 
-export class AdaptiveCardPeer extends TypedCardElementPeer<GenietalkCards.AdaptiveCard> {
+export class AdaptiveCardPeer extends TypedCardElementPeer<GenietalkCards.GenietalkCard> {
     static readonly langProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_1, "lang", "Language");
     static readonly fallbackTextProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "fallbackText", "Fallback text", false, true);
     static readonly speakProperty = new StringPropertyEditor(GenietalkCards.Versions.v1_0, "speak", "Speak");
@@ -1914,7 +1914,7 @@ export class ContainerPeer extends TypedCardElementPeer<GenietalkCards.Container
     }
 }
 
-export class ActionSetPeer extends TypedCardElementPeer<GenietalkCards.AdaptiveCard> {
+export class ActionSetPeer extends TypedCardElementPeer<GenietalkCards.GenietalkCard> {
     protected addAction(action: GenietalkCards.Action) {
         this.cardElement.addAction(action);
 

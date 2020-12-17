@@ -1,4 +1,4 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 import * as Designer from "./card-designer-surface";
 import { HostContainer } from "./containers/host-container";
 import { Toolbar } from "./toolbar";
@@ -7,7 +7,7 @@ import { Toolbox } from "./tool-box";
 import { FieldDefinition } from "./data";
 export declare class CardDesigner extends Designer.DesignContext {
     private static internalProcessMarkdown;
-    static onProcessMarkdown: (text: string, result: Adaptive.IMarkdownProcessingResult) => void;
+    static onProcessMarkdown: (text: string, result: GenietalkCards.IMarkdownProcessingResult) => void;
     private static MAX_UNDO_STACK_SIZE;
     private _isAttached;
     private _cardEditor;
@@ -100,11 +100,11 @@ export declare class CardDesigner extends Designer.DesignContext {
     redo(): void;
     newCard(): void;
     onCardPayloadChanged: (designer: CardDesigner) => void;
-    onCardValidated: (designer: CardDesigner, validationLogEntries: Adaptive.IValidationEvent[]) => void;
+    onCardValidated: (designer: CardDesigner, validationLogEntries: GenietalkCards.IValidationEvent[]) => void;
     onActiveHostContainerChanged: (designer: CardDesigner) => void;
     onTargetVersionChanged: (designer: CardDesigner) => void;
-    get targetVersion(): Adaptive.Version;
-    set targetVersion(value: Adaptive.Version);
+    get targetVersion(): GenietalkCards.Version;
+    set targetVersion(value: GenietalkCards.Version);
     get dataStructure(): FieldDefinition;
     set dataStructure(value: FieldDefinition);
     get sampleData(): any;

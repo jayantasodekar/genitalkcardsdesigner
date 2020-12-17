@@ -118,17 +118,17 @@ export class CardDesigner extends Designer.DesignContext {
         if (this._propertySheetToolbox.content) {
             this._propertySheetToolbox.content.innerHTML = "";
 
-            let card: GenietalkCards.AdaptiveCard;
+            let card: GenietalkCards.GenietalkCard;
 
             if (peer) {
                 card = peer.buildPropertySheetCard(this);
             }
             else {
-                card = new GenietalkCards.AdaptiveCard();
+                card = new GenietalkCards.GenietalkCard();
                 card.parse(
                     {
                         type: "AdaptiveCard",
-                        version: "1.0",
+                        version: "1.3",
                         body: [
                             {
                                 type: "TextBlock",
@@ -816,7 +816,7 @@ export class CardDesigner extends Designer.DesignContext {
         GenietalkCards.GlobalSettings.enableFullJsonRoundTrip = true;
         GenietalkCards.GlobalSettings.allowPreProcessingPropertyValues = true;
 
-        GenietalkCards.AdaptiveCard.onProcessMarkdown = (text: string, result: GenietalkCards.IMarkdownProcessingResult) => {
+        GenietalkCards.GenietalkCard.onProcessMarkdown = (text: string, result: GenietalkCards.IMarkdownProcessingResult) => {
             CardDesigner.internalProcessMarkdown(text, result);
         }
 
@@ -995,7 +995,7 @@ export class CardDesigner extends Designer.DesignContext {
         this._jsonEditorsPanel = new SidePanel(
             "jsonEditorPanel",
             SidePanelAlignment.Bottom,
-            document.getElementById("bottomCollapsedPaneTabHost"));
+            document.getElementById("rightCollapsedPaneTabHost"));
         this._jsonEditorsPanel.onResized = (sender: SidePanel) => {
             this.updateJsonEditorsLayout();
         }

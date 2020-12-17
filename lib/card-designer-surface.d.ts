@@ -1,4 +1,4 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 import { IPoint } from "./miscellaneous";
 import * as DesignerPeers from "./designer-peers";
 import { HostContainer } from "./containers";
@@ -9,16 +9,16 @@ export declare enum BindingPreviewMode {
     SampleData = 2
 }
 export declare type CardElementType = {
-    new (): Adaptive.CardElement;
+    new (): GenietalkCards.CardElement;
 };
 export declare type ActionType = {
-    new (): Adaptive.Action;
+    new (): GenietalkCards.Action;
 };
 export declare type CardElementPeerType = {
-    new (parent: DesignerPeers.DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeers.DesignerPeerRegistrationBase, cardElement: Adaptive.CardElement): DesignerPeers.CardElementPeer;
+    new (parent: DesignerPeers.DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeers.DesignerPeerRegistrationBase, cardElement: GenietalkCards.CardElement): DesignerPeers.CardElementPeer;
 };
 export declare type ActionPeerType = {
-    new (parent: DesignerPeers.DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeers.DesignerPeerRegistrationBase, action: Adaptive.Action): DesignerPeers.ActionPeer;
+    new (parent: DesignerPeers.DesignerPeer, designerSurface: CardDesignerSurface, registration: DesignerPeers.DesignerPeerRegistrationBase, action: GenietalkCards.Action): DesignerPeers.ActionPeer;
 };
 export declare abstract class DesignerPeerRegistry<TSource, TPeer> {
     protected _items: Array<DesignerPeers.DesignerPeerRegistration<TSource, TPeer>>;
@@ -32,15 +32,15 @@ export declare abstract class DesignerPeerRegistry<TSource, TPeer> {
 }
 export declare class CardElementPeerRegistry extends DesignerPeerRegistry<CardElementType, CardElementPeerType> {
     reset(): void;
-    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, cardElement: Adaptive.CardElement): DesignerPeers.CardElementPeer;
+    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, cardElement: GenietalkCards.CardElement): DesignerPeers.CardElementPeer;
 }
 export declare class ActionPeerRegistry extends DesignerPeerRegistry<ActionType, ActionPeerType> {
     reset(): void;
-    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, action: Adaptive.Action): DesignerPeers.ActionPeer;
+    createPeerInstance(designerSurface: CardDesignerSurface, parent: DesignerPeers.DesignerPeer, action: GenietalkCards.Action): DesignerPeers.ActionPeer;
 }
 export declare abstract class DesignContext {
     abstract get hostContainer(): HostContainer;
-    abstract get targetVersion(): Adaptive.Version;
+    abstract get targetVersion(): GenietalkCards.Version;
     abstract get dataStructure(): FieldDefinition;
     abstract get bindingPreviewMode(): BindingPreviewMode;
     abstract get sampleData(): any;
@@ -77,13 +77,13 @@ export declare class CardDesignerSurface {
     private get card();
     private setDraggedPeer;
     constructor(context: DesignContext);
-    onCardValidated: (logEntries: Adaptive.IValidationEvent[]) => void;
+    onCardValidated: (logEntries: GenietalkCards.IValidationEvent[]) => void;
     onSelectedPeerChanged: (peer: DesignerPeers.DesignerPeer) => void;
     onLayoutUpdated: (isFullRefresh: boolean) => void;
     fixedHeightCard: boolean;
     getDesignerSurfaceOffset(): IPoint;
     findDropTarget(pointerPosition: IPoint, peer: DesignerPeers.DesignerPeer): DesignerPeers.DesignerPeer;
-    findPeer(cardObject: Adaptive.CardObject): DesignerPeers.DesignerPeer;
+    findPeer(cardObject: GenietalkCards.CardObject): DesignerPeers.DesignerPeer;
     beginUpdate(): void;
     endUpdate(renderCard: boolean): void;
     render(): void;

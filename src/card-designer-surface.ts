@@ -100,7 +100,7 @@ export class CardElementPeerRegistry extends DesignerPeerRegistry<CardElementTyp
     reset() {
         this.clear();
 
-        this.registerPeer(GenietalkCards.AdaptiveCard, DesignerPeers.AdaptiveCardPeer, DesignerPeerCategory.Containers, "acd-icon-adaptiveCard");
+        this.registerPeer(GenietalkCards.GenietalkCard, DesignerPeers.AdaptiveCardPeer, DesignerPeerCategory.Containers, "acd-icon-adaptiveCard");
         this.registerPeer(GenietalkCards.Container, DesignerPeers.ContainerPeer, DesignerPeerCategory.Containers, "acd-icon-container");
         this.registerPeer(GenietalkCards.ColumnSet, DesignerPeers.ColumnSetPeer, DesignerPeerCategory.Containers, "acd-icon-columnSet");
         this.registerPeer(GenietalkCards.Column, DesignerPeers.ColumnPeer, DesignerPeerCategory.Containers, "acd-icon-column");
@@ -177,7 +177,7 @@ export class CardDesignerSurface {
 
     private _updateCount: number = 0;
 
-    private _card: GenietalkCards.AdaptiveCard;
+    private _card: GenietalkCards.GenietalkCard;
     private _allPeers: Array<DesignerPeers.DesignerPeer> = [];
     private _rootPeer: DesignerPeers.DesignerPeer;
     private _cardHost: HTMLElement;
@@ -286,12 +286,12 @@ export class CardDesignerSurface {
             this.onCardValidated(allValidationEvents);
         }
 
-        let cardToRender: GenietalkCards.AdaptiveCard = this.card;
+        let cardToRender: GenietalkCards.GenietalkCard = this.card;
 
         if (this.isPreviewMode) {
             let inputPayload = this.card.toJSON(this._serializationContext);
 
-            cardToRender = new GenietalkCards.AdaptiveCard();
+            cardToRender = new GenietalkCards.GenietalkCard();
             cardToRender.hostConfig = this.card.hostConfig;
             cardToRender.onExecuteAction = (action: GenietalkCards.Action) => {
                 let message: string = "Action executed\n";
@@ -455,7 +455,7 @@ export class CardDesignerSurface {
 
         if (isExpanded) {
             if (!peer) {
-                let registration = CardDesignerSurface.cardElementPeerRegistry.findTypeRegistration(GenietalkCards.AdaptiveCard);
+                let registration = CardDesignerSurface.cardElementPeerRegistry.findTypeRegistration(GenietalkCards.GenietalkCard);
 
                 peer = new registration.peerType(peer, this, registration, action.card);
 
@@ -481,7 +481,7 @@ export class CardDesignerSurface {
         this.updateLayout();
     }
 
-    private get card(): GenietalkCards.AdaptiveCard {
+    private get card(): GenietalkCards.GenietalkCard {
         return this._card;
     }
 
@@ -593,7 +593,7 @@ export class CardDesignerSurface {
         this.context.hostContainer.cardHost.innerHTML = "";
         this.context.hostContainer.cardHost.appendChild(rootElement);
 
-        this._card = new GenietalkCards.AdaptiveCard();
+        this._card = new GenietalkCards.GenietalkCard();
         this._card.onInlineCardExpanded = (action: GenietalkCards.ShowCardAction, isExpanded: boolean) => { this.inlineCardExpanded(action, isExpanded); };
         this._card.onPreProcessPropertyValue = (sender: GenietalkCards.CardObject, property: GenietalkCards.PropertyDefinition, value: any) => {
             if (Shared.GlobalSettings.enableDataBindingSupport && typeof value === "string" && this.context.sampleData && this.context.bindingPreviewMode !== BindingPreviewMode.NoPreview) {

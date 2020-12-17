@@ -1,4 +1,4 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 export interface IPoint {
     x: number;
     y: number;
@@ -18,4 +18,4 @@ export declare class Utils {
     static isAbsoluteUrl(urlString: string): boolean;
     static joinPaths(...args: string[]): string;
 }
-export declare var defaultHostConfig: Adaptive.HostConfig;
+export declare var defaultHostConfig: GenietalkCards.HostConfig;

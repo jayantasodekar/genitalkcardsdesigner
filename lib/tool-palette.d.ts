@@ -1,4 +1,4 @@
-import * as Adaptive from "genietalkcards";
+import * as GenietalkCards from "genietalkcards";
 import { DraggableElement } from "./draggable-element";
 import { FieldDefinition } from "./data";
 import { DesignContext, CardDesignerSurface } from "./card-designer-surface";
@@ -13,9 +13,9 @@ export declare abstract class BasePaletteItem extends DraggableElement {
 export declare class ElementPaletteItem extends BasePaletteItem {
     protected getText(): string;
     protected getIconClass(): string;
-    readonly typeRegistration: Adaptive.ITypeRegistration<Adaptive.CardElement>;
+    readonly typeRegistration: GenietalkCards.ITypeRegistration<GenietalkCards.CardElement>;
     readonly peerRegistration: DesignerPeerRegistrationBase;
-    constructor(typeRegistration: Adaptive.ITypeRegistration<Adaptive.CardElement>, peerRegistration: DesignerPeerRegistrationBase);
+    constructor(typeRegistration: GenietalkCards.ITypeRegistration<GenietalkCards.CardElement>, peerRegistration: DesignerPeerRegistrationBase);
     createPeer(context: DesignContext, designer: CardDesignerSurface): CardElementPeer;
 }
 export declare class DataPaletteItem extends BasePaletteItem {
