@@ -30,7 +30,8 @@ export abstract class BaseTreeItem extends DraggableElement {
 
     protected click(e: MouseEvent) {
         super.click(e);
-
+        console.log('jayant====>', e);
+        
         this.setIsSelected(true, false);
     }
 

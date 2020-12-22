@@ -189,9 +189,9 @@ export class SidePanel {
         this._contentHost.style.overflow = "hidden";
         this._contentHost.style.flex = "1 1 auto";
         this._contentHost.style.position = "relative";
-
         if (this.isVertical) {
             this._contentHost.style.flexDirection = "column";
+            console.log(' this._contentHost', this._contentHost);
         }
         else {
             this._contentHost.style.flexDirection = "row";
@@ -254,12 +254,12 @@ export class SidePanel {
 
             this._attachedTo.style.flexDirection = "row";
             this._attachedTo.style.overflowX = "hidden";
+           
         }
         else {
             if (this.size) {
                 this._attachedTo.style.height = this.size + "px";
             }
-
             this._attachedTo.style.flexDirection = "column";
             this._attachedTo.style.overflowY = "hidden";
         }
@@ -268,7 +268,6 @@ export class SidePanel {
             if (splitterElement) {
                 this._attachedTo.appendChild(splitterElement);
             }
-
             this._attachedTo.appendChild(this._contentHost);
         }
         else {

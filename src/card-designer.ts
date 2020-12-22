@@ -285,6 +285,7 @@ export class CardDesigner extends Designer.DesignContext {
 
         if (_cardArea) {
             _cardArea.style.backgroundColor = this.hostContainer.getBackgroundColor();
+            _cardArea.style.minWidth="350px";
         }
 
         this.hostContainer.initialize();
@@ -365,7 +366,7 @@ export class CardDesigner extends Designer.DesignContext {
         };
 
         this.buildPalette();
-       // this.buildPropertySheet(null);
+        //this.buildPropertySheet(null);
 
         this.updateCardFromJson(false);
         this.updateSampleData();
@@ -953,12 +954,12 @@ export class CardDesigner extends Designer.DesignContext {
 
         this.toolbar.attachTo(document.getElementById("toolbarHost"));
 
-        if (this._versionChoicePicker) {
-            this._versionChoicePicker.selectedIndex = Shared.SupportedTargetVersions.indexOf(this.targetVersion);
-            this._versionChoicePicker.onChanged = (sender: ToolbarChoicePicker) => {
-                this.targetVersion = Shared.SupportedTargetVersions[parseInt(this._versionChoicePicker.value)];
-            }
-        }
+        // if (this._versionChoicePicker) {
+        //     this._versionChoicePicker.selectedIndex = Shared.SupportedTargetVersions.indexOf(this.targetVersion);
+        //     this._versionChoicePicker.onChanged = (sender: ToolbarChoicePicker) => {
+        //         this.targetVersion = Shared.SupportedTargetVersions[parseInt(this._versionChoicePicker.value)];
+        //     }
+        // }
 
         // if (this._copyJSONButton.isVisible) {
         //     new Clipboard(
@@ -1013,13 +1014,12 @@ export class CardDesigner extends Designer.DesignContext {
             this._sampleDataEditorToolbox.content = document.createElement("div");
             this._sampleDataEditorToolbox.content.style.padding = "8px";
             this._sampleDataEditorToolbox.content.innerText = Strings.loadingEditor;
-
             this._jsonEditorsPanel.addToolbox(this._sampleDataEditorToolbox);
         }
 
         this._jsonEditorsPanel.attachTo(document.getElementById("jsonEditorPanel"));
 
-        // Property sheet panel
+        //Property sheet panel
         // let propertySheetHost = document.createElement("div");
         // propertySheetHost.className = "acd-propertySheet-host";
 
