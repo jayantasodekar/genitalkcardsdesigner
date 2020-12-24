@@ -6,5 +6,6 @@ export declare class GlobalSettings {
     static showVersionPicker: boolean;
     static selectedHostContainerControlsTargetVersion: boolean;
     static showTargetVersionMismatchWarning: boolean;
+    static defaulttemplate: String;
 }
 export declare var SupportedTargetVersions: GenietalkCards.Version[];
