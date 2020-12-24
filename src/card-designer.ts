@@ -937,7 +937,7 @@ export class CardDesigner extends Designer.DesignContext {
                 '<div id="leftCollapsedPaneTabHost" class="acd-verticalCollapsedTabContainer acd-dockedLeft" style="border-right: 1px solid #D2D2D2;display:none"></div>' +
                 '<div id="toolPalettePanel" class="acd-toolPalette-pane"></div>' +
                 '<div style="display: flex;overflow: hidden; width:100%;">' +
-                    '<div style="display: flex; overflow: hidden;">' +
+                    '<div style="display: flex; overflow: hidden; width:33.33%;">' +
                         '<div id="cardArea" class="acd-designer-cardArea">' +
                             '<div style="flex: 1 1 100%; overflow: auto;">' +
                                 '<div id="designerHost"></div>' +
