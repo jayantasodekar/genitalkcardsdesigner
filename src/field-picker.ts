@@ -13,7 +13,8 @@ export class FieldPicker extends Controls.PopupControl {
         element.className = "acd-fieldPicker-host";
 
         let treeItem = new DataTreeItem(this.dataStructure);
-
+        console.log('jayant====>', treeItem.getChildAt(3));
+        
         let treeView = new TreeView(treeItem);
         treeView.onSelectedItemChanged = (sender) => {
             this._selectedField = (treeView.selectedItem as DataTreeItem).field;
