@@ -2463,7 +2463,7 @@ export class TextBlockPeer extends TypedCardElementPeer<GenietalkCards.TextBlock
         super.internalAddCommands(context, commands);
 
         if (context.dataStructure) {
-            console.log('jayant====>', context.dataStructure);
+           // console.log('jayant====>', context.dataStructure);
             
             commands.push(
                 new PeerCommand(
